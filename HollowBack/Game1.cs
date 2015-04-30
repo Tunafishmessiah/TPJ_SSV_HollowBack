@@ -20,7 +20,6 @@ namespace HollowBack
         SpriteBatch spriteBatch;
         Point ScreenSize;
         Scene game;
-        Texture2D test;
 
         public Game1()
             : base()
