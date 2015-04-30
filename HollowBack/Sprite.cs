@@ -25,6 +25,7 @@ namespace HollowBack
         private float rotation;
         private Rectangle tangle;
         private Scene SceneA;
+        private Vector2 origin;
         #endregion
 
         #region Properties
@@ -105,6 +106,12 @@ namespace HollowBack
             set { this.SceneA = value; }
         }
 
+        public Vector2 Origin
+        {
+            get { return origin; }
+            set { origin = value; }
+        }
+
         #endregion
 
         public Sprite(ContentManager pContent, string pAssetName, Scene Cene)
@@ -118,6 +125,7 @@ namespace HollowBack
             Direction = 0;
             angle = 0;
             Tangle = new Rectangle(1, 1, this.Texture.Width, this.Texture.Height);
+            origin = Vector2.Zero;
             this.scene = Cene;
         }
 
@@ -128,7 +136,7 @@ namespace HollowBack
         public virtual void Draw(SpriteBatch pSpriteBatch, Vector2 pOffset)
         {
             pSpriteBatch.Draw(Texture,Position, Tangle, Color.White,
-                angle,scene.ScreenSize,1f,Effect, 1f); 
+                angle,Origin,1f,Effect, 1f); 
         }
     }
 }

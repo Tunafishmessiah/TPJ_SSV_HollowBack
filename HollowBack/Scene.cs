@@ -48,7 +48,7 @@ namespace HollowBack
 
         public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions)
         {
-            SpriteBatch = pSpriteBatch;
+            this.spriteBatch = pSpriteBatch;
             Enemies = new List<Enemy>();
             this.screenSize = screenDimensions;
         }
@@ -87,10 +87,13 @@ namespace HollowBack
         public void Update(GameTime pGameTime)
         {
             foreach (Enemy var1 in enemies) var1.Update(pGameTime);
+            foreach (Sprite HUD in hud) HUD.Update(pGameTime);
+            SSV.Update(pGameTime);
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch pSpriteBatch)
         {
+            this.SpriteBatch = pSpriteBatch;
             foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch,Vector2.Zero);
             foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch,Vector2.Zero);
             SSV.Draw(SpriteBatch, Vector2.Zero);

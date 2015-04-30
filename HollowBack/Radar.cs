@@ -17,7 +17,7 @@ namespace HollowBack
         public override void Draw(SpriteBatch pSpriteBatch, Vector2 pOffset)
         {
             pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,
-                             angle, scene.ScreenSize, 1, this.Effects, 1f);
+                             angle,Vector2.Zero, 1, this.Effects, 1f);
         }
     }
 }
