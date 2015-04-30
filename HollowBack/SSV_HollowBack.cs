@@ -28,8 +28,8 @@ namespace HollowBack
 
             float a = (float)(mouse.X-this.scene.ScreenSize.X/2);
             float l = (float)(mouse.Y-this.scene.ScreenSize.Y/2);
-            this.angle = (float)Math.Atan2(l, a);
-
+            this.angle = (float)(Math.Atan2(l, a) + Math.PI /2);
+            Console.WriteLine(this.angle);
             base.Update(pGameTime);
         }
 
