@@ -127,9 +127,9 @@ namespace HollowBack
             Effect = SpriteEffects.None;
             Texture = pContent.Load<Texture2D>(pAssetName);
             Position = Vector2.Zero;
-            Velocity = Vector2.Zero;
+            Velocity = 0;
             MatrixPosition = Point.Zero;
-            Direction = 0;
+            Direction = Vector2.Zero;
             angle = 0;
             Tangle = new Rectangle(1, 1, this.Texture.Width, this.Texture.Height);
             origin = Vector2.Zero;
