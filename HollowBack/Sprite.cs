@@ -133,7 +133,7 @@ namespace HollowBack
         {
         }
 
-        public virtual void Draw(SpriteBatch pSpriteBatch, Vector2 pOffset)
+        public virtual void Draw(SpriteBatch pSpriteBatch)
         {
             pSpriteBatch.Draw(Texture,Position, Tangle, Color.White,
                 angle,Origin,1f,Effect, 1f); 

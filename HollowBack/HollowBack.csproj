@@ -43,6 +43,7 @@
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SSV_HollowBack.cs" />
+    <Compile Include="Targeting.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -52,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Cone.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Hunter.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
