@@ -11,9 +11,6 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace HollowBack
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
