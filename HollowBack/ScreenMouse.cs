@@ -28,11 +28,11 @@ namespace HollowBack
 
             base.Update(pGameTime);
         }
-        public override void Draw(SpriteBatch pSpriteBatch, Vector2 pOffset)
+        public override void Draw(SpriteBatch pSpriteBatch)
         {
             Point mp = Mouse.GetState().Position;
             if(scene.Graphics.Viewport.Bounds.Contains(mp))
-            {base.Draw(pSpriteBatch, pOffset);}
+            {base.Draw(pSpriteBatch);}
         }
     }
 }
