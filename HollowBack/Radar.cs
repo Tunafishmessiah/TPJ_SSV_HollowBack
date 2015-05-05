@@ -14,7 +14,7 @@ namespace HollowBack
             : base(pContent, "Radar", Cene)
         {
         }
-        public override void Draw(SpriteBatch pSpriteBatch, Vector2 pOffset)
+        public override void Draw(SpriteBatch pSpriteBatch)
         {
             pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,
                              angle,Vector2.Zero, 1, this.Effects, 1f);

@@ -17,6 +17,7 @@ namespace HollowBack
         private List<Enemy> enemies;
         private List<Sprite> hud;
         private SSV_HollowBack SSV;
+        private Targeting cone;
         private Vector2 screenSize;
         private GraphicsDevice graphics;
         #endregion
@@ -74,7 +75,8 @@ namespace HollowBack
         public void MakeHUD( ContentManager pContent)
         {
             SSV = new SSV_HollowBack(pContent, this);
-           
+            cone = new Targeting(pContent, this);
+
             hud = new List<Sprite>();
 
             Sprite BellowHud = new Sprite(pContent, "SideBlocks",this);
@@ -97,16 +99,22 @@ namespace HollowBack
         public void Update(GameTime pGameTime)
         {
             foreach (Enemy var1 in enemies) var1.Update(pGameTime);
-            SSV.Update(pGameTime);
             foreach (Sprite HUD in hud) HUD.Update(pGameTime);
+            
+            SSV.Update(pGameTime);
+            cone.Update(pGameTime);
+
         }
 
         public void Draw(SpriteBatch pSpriteBatch)
         {
+            cone.Draw(spriteBatch);
             this.SpriteBatch = pSpriteBatch;
-            foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch,Vector2.Zero);
-            SSV.Draw(SpriteBatch, Vector2.Zero);
-            foreach (Sprite HUD in hud) HUD.Draw(SpriteBatch, Vector2.Zero);
+            foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch);
+            SSV.Draw(SpriteBatch);
+            foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch);
+           
+            
         }
     }
 }
