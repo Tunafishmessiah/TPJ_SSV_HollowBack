@@ -18,6 +18,7 @@ namespace HollowBack
         private List<Sprite> hud;
         private SSV_HollowBack SSV;
         private Vector2 screenSize;
+        private GraphicsDevice graphics;
         #endregion
 
         #region Properties
@@ -44,13 +45,19 @@ namespace HollowBack
             get { return screenSize;}
             set { screenSize = value;}
         }
+        public GraphicsDevice Graphics
+        {
+            get { return graphics; }
+            set { graphics = value; }
+        }
         #endregion
 
-        public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions)
+        public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph)
         {
             this.spriteBatch = pSpriteBatch;
             Enemies = new List<Enemy>();
             this.screenSize = screenDimensions;
+            Graphics = Graph;
         }
 
         public void AddSprite(ContentManager pContent, String pAssetName)
@@ -63,6 +70,7 @@ namespace HollowBack
             Enemy var = new Enemy(pContent, pPosition, this);
             enemies.Add(var);
         }
+
         public void MakeHUD( ContentManager pContent)
         {
             SSV = new SSV_HollowBack(pContent, this);
@@ -82,21 +90,23 @@ namespace HollowBack
                 BellowHud.Position =new Vector2(0,((i+1)*(Per * BellowHud.Texture.Height) + (i*BellowHud.Texture.Height)));
                 hud.Add(BellowHud);
             }
+
+            hud.Add(new ScreenMouse(pContent,this));
         }
 
         public void Update(GameTime pGameTime)
         {
             foreach (Enemy var1 in enemies) var1.Update(pGameTime);
-            foreach (Sprite HUD in hud) HUD.Update(pGameTime);
             SSV.Update(pGameTime);
+            foreach (Sprite HUD in hud) HUD.Update(pGameTime);
         }
 
         public void Draw(SpriteBatch pSpriteBatch)
         {
             this.SpriteBatch = pSpriteBatch;
             foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch,Vector2.Zero);
-            foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch,Vector2.Zero);
             SSV.Draw(SpriteBatch, Vector2.Zero);
+            foreach (Sprite HUD in hud) HUD.Draw(SpriteBatch, Vector2.Zero);
         }
     }
 }

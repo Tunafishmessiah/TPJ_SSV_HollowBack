@@ -23,10 +23,11 @@ namespace HollowBack
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            ScreenSize = new Point(1200, 720);
+            ScreenSize = new Point(1280, 720);
             graphics.PreferredBackBufferWidth = ScreenSize.X;
             graphics.PreferredBackBufferHeight = ScreenSize.Y;
-            IsMouseVisible = true;
+            IsMouseVisible = false;
+            
         }
 
         protected override void Initialize()
@@ -38,7 +39,7 @@ namespace HollowBack
         {            
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            game = new Scene(spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y));
+            game = new Scene(spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y), GraphicsDevice);
             game.MakeHUD(Content);
         }
 
