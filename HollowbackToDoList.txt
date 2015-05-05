@@ -1,0 +1,19 @@
+-> Targeting Zone (Cone)
+
+-> Targeting Lazors (Ladar)
+
+-> Enemies
+	-> Spawn (Randomized (type+location))
+	-> Movement
+	-> Attacking
+	-> Status (Alive/Dead)
+
+-> Health Gauge (Top Right corner)
+
+-> Weapon selection (Left side)
+
+-> Preview Window (on click) (Right Side)
+
+-> Action listing (Right side)
+
+-> Weapon disabling when hit
