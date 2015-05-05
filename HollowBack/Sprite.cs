@@ -40,7 +40,7 @@ namespace HollowBack
         public Texture2D Texture
         {
             get { return texture; }
-            private set { texture = value; }
+            set { texture = value; }
         }
 
         public Vector2 Size

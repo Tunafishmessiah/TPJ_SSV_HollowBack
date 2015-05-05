@@ -60,6 +60,9 @@
     <Content Include="Content\Hunter.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\HunterLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Radar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
