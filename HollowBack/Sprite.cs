@@ -16,9 +16,9 @@ namespace HollowBack
         private Texture2D texture;
         private Vector2 size;
         private Vector2 position;
-        private Vector2 velocity;
+        private float velocity;
         private Point matrixPosition;
-        private byte direction;
+        private Vector2 direction;
         private Boolean isActive;
         private Boolean isAlive;
         private SpriteEffects Effect;
@@ -26,6 +26,7 @@ namespace HollowBack
         private Rectangle tangle;
         private Scene SceneA;
         private Vector2 origin;
+
         #endregion
 
         #region Properties
@@ -54,7 +55,7 @@ namespace HollowBack
             set { position = value; }
         }
 
-        public Vector2 Velocity
+        public float Velocity
         {
             get { return velocity; }
             set { velocity = value; }
@@ -66,7 +67,7 @@ namespace HollowBack
             set { matrixPosition = value; }
         }
 
-        public byte Direction
+        public Vector2 Direction
         {
             get { return direction; }
             set { direction = value; }
