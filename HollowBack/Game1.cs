@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace HollowBack
 {
-    //main ship class
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
