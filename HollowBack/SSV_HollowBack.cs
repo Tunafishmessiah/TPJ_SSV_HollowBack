@@ -13,16 +13,13 @@ namespace HollowBack
     class SSV_HollowBack : Sprite
     {
         private Radar radar;
-        private Targeting cone;
 
         public SSV_HollowBack(ContentManager pContent, Scene scene) : base(pContent ,"SSV_HollowBack", scene)
         {
             this.Origin = new Vector2(this.Texture.Width / 2, this.Texture.Height / 2);
             this.Position = new Vector2(this.scene.ScreenSize.X/2 , this.scene.ScreenSize.Y/2);
-            radar = new Radar(pContent, scene);
-            cone = new Targeting(pContent, scene);
-            radar.Position = new Vector2(this.scene.ScreenSize.X/2 - radar.Texture.Width/2,this.scene.ScreenSize.Y/2 - radar.Texture.Height/2);
-            cone.Position = new Vector2(this.scene.ScreenSize.X / 2 - cone.Texture.Width / 2, this.scene.ScreenSize.Y / 2 - cone.Texture.Height / 2);
+            radar = new Radar(pContent, scene);         
+            radar.Position = new Vector2(this.scene.ScreenSize.X / 2 - radar.Texture.Width / 2, this.scene.ScreenSize.Y / 2 - radar.Texture.Height / 2);
         }
 
         public override void Update(GameTime pGameTime)

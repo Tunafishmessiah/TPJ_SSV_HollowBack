@@ -14,7 +14,7 @@ namespace HollowBack
         public Targeting(ContentManager pContent, Scene Cene)
             : base(pContent, "Cone", Cene)
         {
-            this.Origin = new Vector2(this.Texture.Width/2, this.Texture.Height/2);
+            this.Origin = new Vector2(this.Texture.Width/2-5, this.Texture.Height/2+5);
             this.Position = new Vector2(this.scene.ScreenSize.X / 2, this.scene.ScreenSize.Y / 2);
         }
 
@@ -31,8 +31,7 @@ namespace HollowBack
 
         public override void Draw(SpriteBatch pSpriteBatch)
         {
-            pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,
-                             angle, Origin, 1, this.Effects, 1f);
+            pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,angle, Origin, 1, this.Effects, 1f);
         }
     }
 }
