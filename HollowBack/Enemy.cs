@@ -13,7 +13,10 @@ namespace HollowBack
     {
         #region Fields
 
-        private bool isVisible; // Is ship within visible range.
+        private bool isVisible; // Is the ship within visible range.
+        private bool isMoving; // Is the ship moving.
+        private bool isUnknown; // As the ship been identified.
+        private Vector2 destination; // Where the ship is heading.
         private float maxSpeed; // Maximum flight speed.
         private float accelaration; // Rate at which the ship accelarates.
         private Vector2 target; // Position of the target.
@@ -26,6 +29,24 @@ namespace HollowBack
         {
             get { return isVisible; }
             set { isVisible = value; }
+        }
+
+        public bool IsMoving
+        {
+            get { return isMoving; }
+            set { isMoving = value; }
+        }
+
+        public bool IsUnknown
+        {
+            get { return isUnknown; }
+            set { isUnknown = value; }
+        }
+
+        public Vector2 Destination
+        {
+            get { return destination; }
+            set { destination = value; }
         }
 
         public float MaxSpeed
@@ -48,9 +69,10 @@ namespace HollowBack
 
         #endregion
 
-        public Enemy(ContentManager pContent, Vector2 pPosition, Scene scene) : base(pContent, "Hunter", scene)
-        { 
-
+        public Enemy(ContentManager pContent, string pAsset, Scene scene) : base(pContent, "Hunter", scene)
+        {
+            IsUnknown = true;
+            IsVisible = false;
         }
 
         /// <summary>
@@ -69,8 +91,16 @@ namespace HollowBack
         {
             if (IsActive)
             {
-                if (Velocity < MaxSpeed) Velocity += Accelaration;
-                Position += Direction * Velocity;
+                if (IsMoving)
+                {
+                    if (Velocity < MaxSpeed) Velocity += Accelaration;
+                    Position += Direction * Velocity;
+                    if (Vector2.Distance(Position, Destination) <= 100) IsMoving = false;
+                }
+                else
+                {
+                    if (Velocity > 0) Velocity -= Accelaration;
+                }
             }
             else
             {
