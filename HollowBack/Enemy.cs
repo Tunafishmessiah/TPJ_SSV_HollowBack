@@ -52,13 +52,13 @@ namespace HollowBack
         public float MaxSpeed
         {
             get { return maxSpeed; }
-            private set { maxSpeed = value; }
+            protected set { maxSpeed = value; }
         }
 
         public float Accelaration
         {
             get { return accelaration; }
-            private set { accelaration = value; }
+            protected set { accelaration = value; }
         }
 
         public Vector2 Target
@@ -69,10 +69,11 @@ namespace HollowBack
 
         #endregion
 
-        public Enemy(ContentManager pContent, string pAsset, Scene scene) : base(pContent, "Hunter", scene)
+        public Enemy(ContentManager pContent, string pAsset, Scene scene) : base(pContent, pAsset, scene)
         {
             IsUnknown = true;
             IsVisible = false;
+            IsActive = false;
         }
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace HollowBack
         public void SpawnAt(Vector2 pPosition)
         {
             this.Position = pPosition;
+            IsActive = true;
         }
 
         /// <summary>
@@ -114,6 +116,7 @@ namespace HollowBack
         public void SetDestination(Vector2 pDestination)
         {
             Direction = Vector2.Normalize(pDestination - Position);
+            IsMoving = true;
         }
 
         /// <summary>
@@ -133,11 +136,6 @@ namespace HollowBack
             //if (Vector2.Distance(this.Position, this.Target) < Weapon.Range)
             // && Weapon.Cooldown == 0
             // Weapon.Fire(Target)
-        }
-
-        public void Update()
-        {
-
         }
 
     }

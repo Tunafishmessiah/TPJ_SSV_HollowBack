@@ -68,8 +68,8 @@ namespace HollowBack
 
         public void AddEnemy(ContentManager pContent, Vector2 pPosition)
         {
-            Enemy var = new Enemy(pContent, pPosition, this);
-            enemies.Add(var);
+            //Enemy var = new Enemy(pContent, pPosition, this);
+            //enemies.Add(var);
         }
 
         public void MakeHUD( ContentManager pContent)

@@ -17,6 +17,7 @@ namespace HollowBack
         SpriteBatch spriteBatch;
         Point ScreenSize;
         Scene game;
+        Fighter Fig1;
 
         public Game1()
             : base()
@@ -32,6 +33,9 @@ namespace HollowBack
 
         protected override void Initialize()
         {
+            Fig1 = new Fighter(Content, game);
+            Fig1.SpawnAt(new Vector2(600,600));
+            Fig1.SetDestination(Vector2.Zero);
             base.Initialize();
         }
 
@@ -52,6 +56,7 @@ namespace HollowBack
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             game.Update(gameTime);
+            Fig1.Update();
             base.Update(gameTime);
         }
 
@@ -60,6 +65,7 @@ namespace HollowBack
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+            if (Fig1.IsVisible) Fig1.Draw(spriteBatch);
             game.Draw(spriteBatch);
             spriteBatch.End();
 
