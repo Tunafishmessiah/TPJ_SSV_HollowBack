@@ -12,6 +12,7 @@ namespace HollowBack
 {
     class ScreenMouse : Sprite
     {
+        
         private bool light;
         private Texture2D original, lighty;
 
@@ -26,6 +27,7 @@ namespace HollowBack
             original = pContent.Load<Texture2D>("Hunter");
             lighty = pContent.Load<Texture2D>("HunterLight");
         }
+
         public override void Update(GameTime pGameTime)
         {
             Scale = .5f;
@@ -49,6 +51,7 @@ namespace HollowBack
             else this.Texture = original;
             base.Update(pGameTime);
         }
+
         public override void Draw(SpriteBatch pSpriteBatch)
         {
             Point mp = Mouse.GetState().Position;
