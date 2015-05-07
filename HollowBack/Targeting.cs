@@ -46,6 +46,7 @@ namespace HollowBack
             {
                 Lockin = true;
                 stop = Mouse.GetState().Position;
+                Console.WriteLine(stop);
             } 
             else if (Mstate.LeftButton == ButtonState.Pressed && Lockin == true)
             {
@@ -58,7 +59,7 @@ namespace HollowBack
                 float a = (float)(mouse.X - this.scene.ScreenSize.X / 2);
                 float l = (float)(mouse.Y - this.scene.ScreenSize.Y / 2);
                 this.angle = (float)(Math.Atan2(l, a));
-                Console.WriteLine(this.angle);
+               // Console.WriteLine(this.angle);
                 base.Update(pGameTime);
             } 
 
