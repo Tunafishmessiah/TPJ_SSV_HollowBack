@@ -18,6 +18,7 @@ namespace HollowBack
         private List<HUD_icon> hud;
         private SSV_HollowBack SSV;
         private Targeting cone;
+        private Ladar ladar;
         private Vector2 screenSize;
         private GraphicsDevice graphics;
         private ScreenMouse little; 
@@ -82,7 +83,11 @@ namespace HollowBack
         {
             SSV = new SSV_HollowBack(pContent, this);
             cone = new Targeting(pContent, this);
+
+            ladar = new Ladar(pContent, this);
+
             Little = new ScreenMouse(pContent, this);
+
 
             hud = new List<HUD_icon>();
 
@@ -108,12 +113,20 @@ namespace HollowBack
             
             SSV.Update(pGameTime);
             cone.Update(pGameTime);
+
+            ladar.Update(pGameTime);
             Little.Update(pGameTime);
+
 
         }
 
         public void Draw(SpriteBatch pSpriteBatch)
         {
+            if (cone.Lockin == true)
+            {
+                ladar.Draw(spriteBatch);
+            }
+
             cone.Draw(spriteBatch);
             this.SpriteBatch = pSpriteBatch;
             foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch);
