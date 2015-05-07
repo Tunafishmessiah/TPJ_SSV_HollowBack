@@ -18,7 +18,7 @@ namespace HollowBack
         public HUD_icon(ContentManager pContent, Scene scene, int func)
             : base(pContent, "SideBlocks",scene)
         {
-            font = pContent.Load<SpriteFont>("RADIOLAND");
+            font = pContent.Load<SpriteFont>("RadioLand");
 
             HUD_Func(func);
         }
@@ -26,8 +26,8 @@ namespace HollowBack
         {
             base.Draw(pSpriteBatch);
             scene.SpriteBatch.DrawString(font, function,
-                new Vector2(this.Position.X + this.font.Spacing, this.Position.Y + (this.Texture.Height / 2) 
-                    - (this.font.MeasureString(function).Y/2)),Color.PaleVioletRed);
+                new Vector2(this.Position.X + 10, this.Position.Y + (this.Texture.Height / 2) 
+                    - (this.font.MeasureString(function).Y/2)),Color.Red);
         }
         private void HUD_Func(int function)
         {
