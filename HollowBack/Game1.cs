@@ -11,6 +11,13 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace HollowBack
 {
+    //Making the game Scenes and menus
+    enum GameState { 
+        Start,
+        Gameplay,
+        Gameover
+    }
+    
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -18,6 +25,8 @@ namespace HollowBack
         Point ScreenSize;
         Scene game;
         Fighter Fig1;
+        GameState State;
+        GameState Previous;
 
         public Game1()
             : base()
@@ -28,6 +37,8 @@ namespace HollowBack
             graphics.PreferredBackBufferWidth = ScreenSize.X;
             graphics.PreferredBackBufferHeight = ScreenSize.Y;
             IsMouseVisible = false;
+            State = GameState.Gameplay;
+            Previous = State;
             
         }
 
@@ -55,8 +66,35 @@ namespace HollowBack
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            game.Update(gameTime);
-            Fig1.Update();
+            if (State != Previous)
+            {
+                switch (Previous)
+                {
+                    //We are gonna unload objects here, when we are transitioning from one state to the other.
+                    case(GameState.Gameplay):
+                        break;
+                    case(GameState.Gameover):
+                        break;
+                    case (GameState.Start):
+                        break;
+                }
+            }
+            else
+            {
+                if (State == GameState.Start)
+                {
+ 
+                }
+                else if (State == GameState.Gameplay)
+                {
+                    game.Update(gameTime);
+                    Fig1.Update();
+                }
+                else if (State == GameState.Gameover)
+                { }
+            }
+
+            Previous = State;
             base.Update(gameTime);
         }
 
