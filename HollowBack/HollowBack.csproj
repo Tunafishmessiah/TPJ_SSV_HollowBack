@@ -78,6 +78,9 @@
     <Content Include="Content\SideBlocks.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\SideLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\SSV_HollowBack.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
