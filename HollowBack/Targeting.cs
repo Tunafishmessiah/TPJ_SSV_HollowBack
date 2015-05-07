@@ -11,8 +11,17 @@ namespace HollowBack
 {
     class Targeting : Sprite
     {
-        private bool Lockin = false;
-        
+        private bool lockin = false;
+
+        #region Properties
+
+        public bool Lockin
+        {
+            get { return lockin; }
+            set { lockin = value; }
+        }
+
+        #endregion
 
         public Targeting(ContentManager pContent, Scene Cene)
             : base(pContent, "Cone", Cene)

@@ -35,11 +35,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Carrier.cs" />
+    <Compile Include="Dreadnought.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Fighter.cs" />
     <Compile Include="Frigate.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="HUD_icon.cs" />
+    <Compile Include="Ladar.cs" />
     <Compile Include="ScreenMouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +67,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\HunterLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Ladar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Radar.png">
