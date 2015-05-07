@@ -27,7 +27,7 @@ namespace HollowBack
             ScreenSize = new Point(1280, 720);
             graphics.PreferredBackBufferWidth = ScreenSize.X;
             graphics.PreferredBackBufferHeight = ScreenSize.Y;
-            IsMouseVisible = true;
+            IsMouseVisible = false;
             
         }
 

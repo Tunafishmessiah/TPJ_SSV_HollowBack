@@ -30,7 +30,7 @@ namespace HollowBack
         {
             Scale = .5f;
             Point mp = Mouse.GetState().Position;
-            this.Position = new Vector2(mp.X- Texture.Width/2,mp.Y - Texture.Height/2);
+            this.Position = new Vector2(mp.X- Texture.Width/2+10 ,mp.Y - Texture.Height/2+30);
 
             float x = Position.X;
             float y = Position.Y;
