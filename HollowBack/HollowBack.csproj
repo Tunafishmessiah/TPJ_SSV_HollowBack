@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Enemy.cs" />
     <Compile Include="Fighter.cs" />
+    <Compile Include="Frigate.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="HUD_icon.cs" />
     <Compile Include="ScreenMouse.cs" />
