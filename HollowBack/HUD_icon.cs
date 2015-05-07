@@ -14,11 +14,14 @@ namespace HollowBack
     {
         private SpriteFont font;
         private string function;
+        private int Func;
         private Texture2D original,Lighty;
         private bool lighty;
         private bool Click;
         private MouseState previous;
         private MouseState actualMouse;
+        private KeyboardState keyboard;
+        private KeyboardState KeyPrevious;
 
 
         public HUD_icon(ContentManager pContent, Scene scene, int func)
@@ -32,14 +35,17 @@ namespace HollowBack
             Click = false;
             actualMouse = Mouse.GetState();
             previous = actualMouse;
+            keyboard = Keyboard.GetState();
+            KeyPrevious = keyboard;
         }
 
         public override void Update(GameTime pGameTime)
         {
-            Vector2 mouse = scene.Little.Position;
             actualMouse = Mouse.GetState();
+            keyboard = Keyboard.GetState();
+            Vector2 mouse = scene.Little.Position;
 
-            if (actualMouse.LeftButton == ButtonState.Pressed && previous.LeftButton == ButtonState.Released && OnTop(mouse))
+            if ((actualMouse.LeftButton == ButtonState.Pressed && previous.LeftButton == ButtonState.Released && OnTop(mouse)) || KeyPress())
             {
                 Click = !Click;
                 if (Click)
@@ -66,6 +72,7 @@ namespace HollowBack
             base.Update(pGameTime);
 
             previous = actualMouse;
+            KeyPrevious = keyboard;
         }
 
         public override void Draw(SpriteBatch pSpriteBatch)
@@ -78,6 +85,7 @@ namespace HollowBack
 
         private void HUD_Func(int function)
         {
+            Func = function;
             switch (function)
             {
                 case (0):
@@ -108,6 +116,42 @@ namespace HollowBack
                 return true;
             }
             return false;
+        }
+
+        private bool KeyPress()
+        {
+            if (keyboard != KeyPrevious)
+            {
+                switch (Func)
+                {
+                    case (0):
+                        if (keyboard.IsKeyDown(Keys.D1))
+                            return true;
+                        break;
+                    case (1):
+                        if (keyboard.IsKeyDown(Keys.D2))
+                            return true;
+                        break;
+                    case (2):
+                        if (keyboard.IsKeyDown(Keys.D3))
+                            return true;
+                        break;
+                    case (3):
+                        if (keyboard.IsKeyDown(Keys.D4))
+                            return true;
+                        break;
+                    case (4):
+                        if (keyboard.IsKeyDown(Keys.D5))
+                            return true;
+                        break;
+                    case (5):
+                        if (keyboard.IsKeyDown(Keys.D6))
+                            return true;
+                        break;
+                }
+                return false;
+            }
+            else return false;
         }
     }
 }
