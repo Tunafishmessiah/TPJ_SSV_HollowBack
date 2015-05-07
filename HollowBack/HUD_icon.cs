@@ -13,17 +13,45 @@ namespace HollowBack
     class HUD_icon : Sprite
     {
         private SpriteFont font;
-        private int function;
-        //0-Missils
-        //1-Lasers
-        //2-Railgun
-        //3-Particle Cannon
-        //4-EMP
-        //5-Torpedos
+        private string function;
+
         public HUD_icon(ContentManager pContent, Scene scene, int func)
             : base(pContent, "SideBlocks",scene)
         {
-            this.function = func;
+            font = pContent.Load<SpriteFont>("RADIOLAND");
+
+            HUD_Func(func);
+        }
+        public override void Draw(SpriteBatch pSpriteBatch)
+        {
+            base.Draw(pSpriteBatch);
+            scene.SpriteBatch.DrawString(font, function,
+                new Vector2(this.Position.X + this.font.Spacing, this.Position.Y + (this.Texture.Height / 2) 
+                    - (this.font.MeasureString(function).Y/2)),Color.PaleVioletRed);
+        }
+        private void HUD_Func(int function)
+        {
+            switch(function)
+            {
+                case(0):
+                    this.function = "Missil";
+                    break;
+                case (1):
+                    this.function = "Laser";
+                    break;
+                case (2):
+                    this.function = "Railgun";
+                    break;
+                case (3):
+                    this.function = "Particle\nCannon";
+                    break;
+                case (4):
+                    this.function = "EMP";
+                    break;
+                case (5):
+                    this.function = "Torpedos";
+                    break;
+            }
         }
     }
 

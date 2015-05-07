@@ -15,7 +15,7 @@ namespace HollowBack
 
         private SpriteBatch spriteBatch;
         private List<Enemy> enemies;
-        private List<Sprite> hud;
+        private List<HUD_icon> hud;
         private SSV_HollowBack SSV;
         private Targeting cone;
         private Vector2 screenSize;
@@ -36,7 +36,7 @@ namespace HollowBack
             private set { enemies = value; }
         }
 
-        public List<Sprite> HUD
+        public List<HUD_icon> HUD
         {
             get { return hud; }
             set { hud = value; }
@@ -77,23 +77,21 @@ namespace HollowBack
             SSV = new SSV_HollowBack(pContent, this);
             cone = new Targeting(pContent, this);
 
-            hud = new List<Sprite>();
+            hud = new List<HUD_icon>();
 
-            Sprite BellowHud = new Sprite(pContent, "SideBlocks",this);
+            HUD_icon BellowHud = new HUD_icon(pContent,this,0);
             float yHeight = screenSize.Y / BellowHud.Texture.Height;
-            int intYHeight = (int) yHeight;
+            int intYHeight = (int)yHeight;
             Vector2 position = Vector2.Zero;
 
             float Per = yHeight-intYHeight;
 
             for (int i = 0; i < 6; i++)
             {
-                BellowHud = new Sprite(pContent, "SideBlocks",this);
+                BellowHud = new HUD_icon(pContent,this,i);
                 BellowHud.Position =new Vector2(0,((i+1)*(Per * BellowHud.Texture.Height) + (i*BellowHud.Texture.Height)));
                 hud.Add(BellowHud);
             }
-
-            hud.Add(new ScreenMouse(pContent,this));
         }
 
         public void Update(GameTime pGameTime)
