@@ -12,6 +12,7 @@ namespace HollowBack
     class Targeting : Sprite
     {
         private bool lockin = false;
+        private Point stop = new Point(0,0);
 
         #region Properties
 
@@ -19,6 +20,12 @@ namespace HollowBack
         {
             get { return lockin; }
             set { lockin = value; }
+        }
+
+        public Point Stop
+        {
+            get { return stop; }
+            set { stop = value; }
         }
 
         #endregion
@@ -38,10 +45,12 @@ namespace HollowBack
             if (Mstate.LeftButton == ButtonState.Pressed && Lockin == false)
             {
                 Lockin = true;
+                stop = Mouse.GetState().Position;
             } 
             else if (Mstate.LeftButton == ButtonState.Pressed && Lockin == true)
             {
                 Lockin = false;
+
             }
 
             if (Lockin == false)
