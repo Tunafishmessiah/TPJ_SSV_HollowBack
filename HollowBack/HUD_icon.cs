@@ -14,7 +14,7 @@ namespace HollowBack
     {
         private SpriteFont font;
         private string function;
-        private int Func;
+        private Keys FuncKey;
         private Texture2D original,Lighty;
         private bool lighty;
         private bool Click;
@@ -73,26 +73,31 @@ namespace HollowBack
 
         private void HUD_Func(int function)
         {
-            Func = function;
             switch (function)
             {
                 case (0):
                     this.function = "Missil";
+                    FuncKey = Keys.D1;
                     break;
                 case (1):
                     this.function = "Laser";
+                    FuncKey = Keys.D2;
                     break;
                 case (2):
                     this.function = "Railgun";
+                    FuncKey = Keys.D3;
                     break;
                 case (3):
                     this.function = "Particle\nCannon";
+                    FuncKey = Keys.D4;
                     break;
                 case (4):
                     this.function = "EMP";
+                    FuncKey = Keys.D5;
                     break;
                 case (5):
                     this.function = "Torpedos";
+                    FuncKey = Keys.D6;
                     break;
             }
         }
@@ -110,34 +115,10 @@ namespace HollowBack
         {
             if (scene.M_Keyboard != scene.M_PreviousKeyboard)
             {
-                switch (Func)
-                {
-                    case (0):
-                        if (scene.M_Keyboard.IsKeyDown(Keys.D1))
-                            return true;
-                        break;
-                    case (1):
-                        if (scene.M_Keyboard.IsKeyDown(Keys.D2))
-                            return true;
-                        break;
-                    case (2):
-                        if (scene.M_Keyboard.IsKeyDown(Keys.D3))
-                            return true;
-                        break;
-                    case (3):
-                        if (scene.M_Keyboard.IsKeyDown(Keys.D4))
-                            return true;
-                        break;
-                    case (4):
-                        if (scene.M_Keyboard.IsKeyDown(Keys.D5))
-                            return true;
-                        break;
-                    case (5):
-                        if (scene.M_Keyboard.IsKeyDown(Keys.D6))
-                            return true;
-                        break;
-                }
-                return false;
+                if (scene.M_Keyboard.IsKeyDown(FuncKey))
+                    return true;
+
+                else return false;
             }
             else return false;
         }
