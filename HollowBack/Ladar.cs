@@ -21,8 +21,7 @@ namespace HollowBack
 
         public  void Update(GameTime pGameTime, bool lockin, Point stop)
         {
-            Point mouse = Mouse.GetState().Position;
-            MouseState Mstate = Mouse.GetState();
+            Point mouse = scene.Mstate.Position;
 
             if (lockin == true)
             {

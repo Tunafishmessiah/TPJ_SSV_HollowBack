@@ -17,6 +17,7 @@ namespace HollowBack
 
             MaxSpeed = 1;
             Accelaration = 0.1f;
+                
         }
 
         public void Update()

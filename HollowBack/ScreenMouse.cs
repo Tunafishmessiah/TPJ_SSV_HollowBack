@@ -31,7 +31,7 @@ namespace HollowBack
         public override void Update(GameTime pGameTime)
         {
             Scale = .5f;
-            Point mp = Mouse.GetState().Position;
+            Point mp = scene.Mstate.Position;
             this.Position = new Vector2(mp.X- Texture.Width/2+10 ,mp.Y - Texture.Height/2+30);
 
             float x = Position.X;
@@ -54,7 +54,7 @@ namespace HollowBack
 
         public override void Draw(SpriteBatch pSpriteBatch)
         {
-            Point mp = Mouse.GetState().Position;
+            Point mp = scene.Mstate.Position;
             if(scene.Graphics.Viewport.Bounds.Contains(mp))
             {base.Draw(pSpriteBatch);}
         }

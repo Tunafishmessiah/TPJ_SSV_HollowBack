@@ -21,7 +21,9 @@ namespace HollowBack
         private Ladar ladar;
         private Vector2 screenSize;
         private GraphicsDevice graphics;
-        private ScreenMouse little; 
+        private ScreenMouse little;
+        private MouseState mstate, previousMstate;
+        private KeyboardState keyboard, previousKeyboard;
         #endregion
 
         #region Properties
@@ -58,6 +60,27 @@ namespace HollowBack
             get { return little; }
             set { little = value; }
         }
+        public MouseState Mstate
+        {
+            get {return mstate;}
+            set {mstate = value;}
+        }
+        public MouseState PreviousMstate
+        {
+            get { return previousMstate; }
+            set { previousMstate = value; }
+        }
+
+        public KeyboardState M_Keyboard
+        {
+            get { return keyboard; }
+            set { keyboard = value; }
+        }
+        public KeyboardState M_PreviousKeyboard
+        {
+            get { return previousKeyboard; }
+            set { previousKeyboard = value; }
+        }
         #endregion
 
         public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph)
@@ -66,6 +89,13 @@ namespace HollowBack
             Enemies = new List<Enemy>();
             this.screenSize = screenDimensions;
             Graphics = Graph;
+
+            mstate = Mouse.GetState();
+            previousMstate = mstate;
+
+            keyboard = Keyboard.GetState();
+            previousKeyboard = keyboard;
+
         }
 
         public void AddSprite(ContentManager pContent, String pAssetName)
@@ -108,6 +138,9 @@ namespace HollowBack
 
         public void Update(GameTime pGameTime)
         {
+            keyboard = Keyboard.GetState();
+            mstate = Mouse.GetState();
+
             foreach (Enemy var1 in enemies) var1.Update(pGameTime);
             foreach (Sprite HUD in hud) HUD.Update(pGameTime);
             
@@ -117,7 +150,8 @@ namespace HollowBack
             ladar.Update(pGameTime, cone.Lockin, cone.Stop);
             Little.Update(pGameTime);
 
-
+            previousKeyboard = keyboard;
+            previousMstate = mstate;
         }
 
         public void Draw(SpriteBatch pSpriteBatch)

@@ -24,7 +24,7 @@ namespace HollowBack
 
         public override void Update(GameTime pGameTime)
         {
-            Point mouse = Mouse.GetState().Position;
+            Point mouse = scene.Mstate.Position;
 
             float a = (float)(mouse.X-this.scene.ScreenSize.X/2);
             float l = (float)(mouse.Y-this.scene.ScreenSize.Y/2);

@@ -34,24 +34,25 @@ namespace HollowBack
             : base(pContent, "Cone", Cene)
         {
             this.Origin = new Vector2(this.Texture.Width/2-5, this.Texture.Height/2+5);
-            this.Position = new Vector2(this.scene.ScreenSize.X / 2, this.scene.ScreenSize.Y / 2);         
+            this.Position = new Vector2(this.scene.ScreenSize.X / 2, this.scene.ScreenSize.Y / 2);
         }
 
         public override void Update(GameTime pGameTime)
         {
-            Point mouse = Mouse.GetState().Position;
-            MouseState Mstate = Mouse.GetState();
+            Point mouse = scene.Mstate.Position;
 
-            if (Mstate.LeftButton == ButtonState.Pressed && Lockin == false)
+            if (scene.Mstate.LeftButton != scene.PreviousMstate.LeftButton)
             {
-                Lockin = true;
-                stop = Mouse.GetState().Position;
-                Console.WriteLine(stop);
-            } 
-            else if (Mstate.LeftButton == ButtonState.Pressed && Lockin == true)
-            {
-                Lockin = false;
-
+                if (scene.Mstate.LeftButton == ButtonState.Pressed && Lockin == false)
+                {
+                    Lockin = true;
+                    stop = scene.Mstate.Position;
+                    Console.WriteLine(stop);
+                }
+                else if (scene.Mstate.LeftButton == ButtonState.Pressed && Lockin == true)
+                {
+                    Lockin = false;
+                }
             }
 
             if (Lockin == false)
@@ -59,10 +60,9 @@ namespace HollowBack
                 float a = (float)(mouse.X - this.scene.ScreenSize.X / 2);
                 float l = (float)(mouse.Y - this.scene.ScreenSize.Y / 2);
                 this.angle = (float)(Math.Atan2(l, a));
-               // Console.WriteLine(this.angle);
-                base.Update(pGameTime);
-            } 
-
+                // Console.WriteLine(this.angle);
+            }
+            base.Update(pGameTime);
         }
 
         public override void Draw(SpriteBatch pSpriteBatch)
