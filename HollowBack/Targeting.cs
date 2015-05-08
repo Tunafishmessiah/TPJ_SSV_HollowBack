@@ -12,7 +12,7 @@ namespace HollowBack
     class Targeting : Sprite
     {
         private bool lockin = false;
-        private Point stop = new Point(0,0);
+        private float stopAngle = 0;
 
         #region Properties
 
@@ -22,10 +22,10 @@ namespace HollowBack
             set { lockin = value; }
         }
 
-        public Point Stop
+        public float stopAngle_M
         {
-            get { return stop; }
-            set { stop = value; }
+            get { return stopAngle; }
+            set { stopAngle = value; }
         }
 
         #endregion
@@ -46,12 +46,13 @@ namespace HollowBack
                 if (scene.Mstate.LeftButton == ButtonState.Pressed && Lockin == false)
                 {
                     Lockin = true;
-                    stop = scene.Mstate.Position;
-                    Console.WriteLine(stop);
+                    stopAngle = this.angle;
+                    Console.WriteLine(stopAngle);
                 }
                 else if (scene.Mstate.LeftButton == ButtonState.Pressed && Lockin == true)
                 {
                     Lockin = false;
+                    stopAngle = 0;
                 }
             }
 
@@ -60,7 +61,7 @@ namespace HollowBack
                 float a = (float)(mouse.X - this.scene.ScreenSize.X / 2);
                 float l = (float)(mouse.Y - this.scene.ScreenSize.Y / 2);
                 this.angle = (float)(Math.Atan2(l, a));
-                // Console.WriteLine(this.angle);
+                Console.WriteLine(this.angle);
             }
             base.Update(pGameTime);
         }

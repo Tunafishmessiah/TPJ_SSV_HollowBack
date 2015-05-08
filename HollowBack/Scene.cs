@@ -147,7 +147,7 @@ namespace HollowBack
             SSV.Update(pGameTime);
             cone.Update(pGameTime);
 
-            ladar.Update(pGameTime, cone.Lockin, cone.Stop);
+            ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
             Little.Update(pGameTime);
 
             previousKeyboard = keyboard;
