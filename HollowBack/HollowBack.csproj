@@ -63,6 +63,12 @@
     <Content Include="Content\Cone.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Cursor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\CursorLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Hunter.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

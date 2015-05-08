@@ -45,6 +45,19 @@ namespace HollowBack
             get { return hud; }
             set { hud = value; }
         }
+
+        public Targeting Cone
+        {
+            get { return cone; }
+            private set { cone = value; }
+        }
+
+        public Ladar M_Ladar
+        {
+            get { return ladar; }
+            private set { ladar = value; }
+        }
+        
         public Vector2 ScreenSize
         {
             get { return screenSize;}
