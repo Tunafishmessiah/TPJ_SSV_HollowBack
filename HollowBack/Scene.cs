@@ -98,11 +98,14 @@ namespace HollowBack
 
         public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph)
         {
+            //Loading stuff and starting up some needed variables
             this.spriteBatch = pSpriteBatch;
             Enemies = new List<Enemy>();
             this.screenSize = screenDimensions;
             Graphics = Graph;
 
+            //This variable were made so that we can save some processing time, we can acess it
+            //from any variable that's called here, so we don't need to call them in almost every single thing we have on screen
             mstate = Mouse.GetState();
             previousMstate = mstate;
 
@@ -133,6 +136,8 @@ namespace HollowBack
 
 
             hud = new List<HUD_icon>();
+
+            //creating sidebars
 
             HUD_icon BellowHud = new HUD_icon(pContent,this,0);
             float yHeight = screenSize.Y / BellowHud.Texture.Height;
@@ -169,17 +174,14 @@ namespace HollowBack
 
         public void Draw(SpriteBatch pSpriteBatch)
         {
-            if (cone.Lockin == true)
-            {
-                ladar.Draw(spriteBatch);
-            }
 
-            cone.Draw(spriteBatch);
             this.SpriteBatch = pSpriteBatch;
             foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch);
-            SSV.Draw(SpriteBatch);
             foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch);
             Little.Draw(pSpriteBatch);
+            cone.Draw(spriteBatch);
+            SSV.Draw(SpriteBatch);
+            ladar.Draw(spriteBatch);
         }
     }
 }

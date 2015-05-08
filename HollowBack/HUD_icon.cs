@@ -23,9 +23,10 @@ namespace HollowBack
         public HUD_icon(ContentManager pContent, Scene scene, int func)
             : base(pContent, "SideBlocks",scene)
         {
+            //Loading stuff that is gonna be needed further ahead
             font = pContent.Load<SpriteFont>("RadioLand");
             original = pContent.Load<Texture2D>("SideBlocks");
-            Lighty = pContent.Load<Texture2D>("SideLight");
+            Lighty = pContent.Load<Texture2D>("SideLight");//This one is to make it bright when the mouse hovers
             HUD_Func(func);
             lighty = false;
             Click = false;
@@ -35,6 +36,7 @@ namespace HollowBack
         {
             Vector2 mouse = scene.Little.Position;
 
+            //Checking mouse buttons to make the block bright (or not)
             if ((scene.Mstate.LeftButton == ButtonState.Pressed && scene.PreviousMstate.LeftButton == ButtonState.Released && OnTop(mouse)) || KeyPress())
             {
                 Click = !Click;
@@ -66,6 +68,7 @@ namespace HollowBack
         public override void Draw(SpriteBatch pSpriteBatch)
         {
             base.Draw(pSpriteBatch);
+            //Drawing the text above the block. If these two draws positions are changed text will not apear!
             scene.SpriteBatch.DrawString(font, function,
                 new Vector2(this.Position.X + 10, this.Position.Y + (this.Texture.Height / 2)
                     - (this.font.MeasureString(function).Y / 2)), Color.Red);
@@ -73,6 +76,8 @@ namespace HollowBack
 
         private void HUD_Func(int function)
         {
+            //this function will determine what's written in the block and what key
+            //needs to be pressed in order to activate it
             switch (function)
             {
                 case (0):
@@ -104,6 +109,7 @@ namespace HollowBack
         
         private bool OnTop(Vector2 Position)
         {
+            //Avaluating if the mouse is on top of this icon
             if (this.Position.X < Position.X && this.Position.X + this.Texture.Width> Position.X && this.Position.Y < Position.Y && this.Position.Y + this.Texture.Height > Position.Y)
             {
                 return true;
@@ -113,6 +119,7 @@ namespace HollowBack
 
         private bool KeyPress()
         {
+            //testing if the user pressed the designed key to activate this weapon
             if (scene.M_Keyboard != scene.M_PreviousKeyboard)
             {
                 if (scene.M_Keyboard.IsKeyDown(FuncKey))

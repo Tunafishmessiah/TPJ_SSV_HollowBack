@@ -51,7 +51,8 @@ namespace HollowBack
 
         public override void Draw(SpriteBatch pSpriteBatch)
         {
-            pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,angle, Origin, 1, this.Effects, 1f);
+         if (scene.Cone.Lockin == true)
+             pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,angle, Origin, 1, this.Effects, 1f);
         }
     }
 }
