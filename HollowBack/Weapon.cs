@@ -59,7 +59,10 @@ namespace HollowBack
 
         //public void FireWeapon();
 
-        //public void Repair();
+        public void RepairWeapon()
+        {
+            Repair = RepairTime;
+        }
 
         public void Update(Vector2 pPosition, Vector2 pTarget)
         {
