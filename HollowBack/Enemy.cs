@@ -76,21 +76,32 @@ namespace HollowBack
             IsActive = false;
         }
 
-        /// <summary>
-        /// Spawns the ship at the specified location.
-        /// </summary>
+
         public void SpawnAt(Vector2 pPosition)
         {
             this.Position = pPosition;
             IsActive = true;
         }
 
-        /// <summary>
-        /// If the ship is active accelarates it to max speed and moves it towards the destination.
-        /// Else it decelarates the ship.
-        /// </summary>
+
+        public void UpdatePositionAngle(Targeting cone)
+        {
+           float PA = (float)(Math.Atan2(this.Position.X, this.Position.Y));
+           Console.WriteLine(this.Position);
+
+           if ((PA + 0.42) > cone.angle + Math.PI / 32 && (PA - 0.42) < cone.angle - Math.PI / 32)
+           {
+               IsVisible = true;
+           }
+           else
+           {
+               IsVisible = false;
+           }
+        }
+
         public void UpdateMovement()
         {
+
             if (IsActive)
             {
                 if (IsMoving)
@@ -110,27 +121,25 @@ namespace HollowBack
             }
         }
 
-        /// <summary>
-        /// Sets the ship's destination.
-        /// </summary>
+        public void Update(Targeting cone)
+        {
+            UpdatePositionAngle(cone);
+        }
+
         public void SetDestination(Vector2 pDestination)
         {
             Direction = Vector2.Normalize(pDestination - Position);
             IsMoving = true;
         }
 
-        /// <summary>
-        /// Sets the ships target.
-        /// </summary>
+
         public void SetTarget(Vector2 pTarget)
         {
+
             this.Target = pTarget;
         }
 
-        /// <summary>
-        /// Fires the main weapon if the ship is within range of its target and the weapon
-        /// is off cooldown.
-        /// </summary>
+
         public void Engage()
         {
             //if (Vector2.Distance(this.Position, this.Target) < Weapon.Range)

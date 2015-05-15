@@ -45,8 +45,6 @@ namespace HollowBack
         protected override void Initialize()
         {
             Fig1 = new Fighter(Content, game);
-            Fig1.SpawnAt(new Vector2(600,600));
-            Fig1.SetDestination(Vector2.Zero);
             base.Initialize();
         }
 
@@ -54,7 +52,7 @@ namespace HollowBack
         {            
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            game = new Scene(spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y), GraphicsDevice);
+            game = new Scene(spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y), GraphicsDevice, Content);
             game.MakeHUD(Content);
         }
 
@@ -88,7 +86,7 @@ namespace HollowBack
                 else if (State == GameState.Gameplay)
                 {
                     game.Update(gameTime);
-                    Fig1.Update();
+                    Fig1.Update(game.Cone);
                 }
                 else if (State == GameState.Gameover)
                 { }

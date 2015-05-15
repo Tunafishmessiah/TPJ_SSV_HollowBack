@@ -21,8 +21,8 @@ namespace HollowBack
         public Ladar(ContentManager pContent, Scene Cene)
             : base(pContent, "Ladar", Cene)
         {
-            this.Origin = new Vector2(this.Texture.Width/2-4, this.Texture.Height/2+5);
-            this.Position = new Vector2(this.scene.ScreenSize.X / 2 +3, this.scene.ScreenSize.Y / 2+6);
+            this.Origin = new Vector2(this.Texture.Width/2, this.Texture.Height/2-2);
+            this.Position = new Vector2(this.scene.ScreenSize.X / 2 +3, this.scene.ScreenSize.Y / 2+3);
 
         }
 
@@ -33,13 +33,13 @@ namespace HollowBack
             float l = (float)(mouse.Y - this.scene.ScreenSize.Y / 2);
             aux = (float)(Math.Atan2(l, a));
 
-           // if (Math.Atan((-mouse.X / mouse.Y)) < (Math.Atan((-stop.X / stop.Y)) + Math.PI / 16) && Math.Atan((-mouse.X / mouse.Y)) > (Math.Atan((-stop.X / stop.Y)) - Math.PI / 16))
             if (lockin == true)
             {
                 if ((aux + 0.42) > stopAngle + Math.PI / 32 && (aux - 0.42) < stopAngle - Math.PI / 32)
                 {
                     this.angle = aux;
                     base.Update(pGameTime);
+                   // Console.WriteLine(this.angle);
                 }
             }
             else

@@ -14,7 +14,7 @@ namespace HollowBack
         #region Fields
 
         private SpriteBatch spriteBatch;
-        private List<Enemy> enemies;
+        private List<Fighter> enemies;
         private List<HUD_icon> hud;
         private List<Right_HUD> R_hud;
         private SSV_HollowBack SSV;
@@ -35,7 +35,7 @@ namespace HollowBack
             set { spriteBatch = value; }
         }
 
-        public List<Enemy> Enemies
+        public List<Fighter> Enemies
         {
             get { return enemies; }
             private set { enemies = value; }
@@ -102,11 +102,14 @@ namespace HollowBack
         }
         #endregion
 
-        public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph)
+        public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph, ContentManager Content)
         {
             //Loading stuff and starting up some needed variables
             this.spriteBatch = pSpriteBatch;
-            Enemies = new List<Enemy>();
+            Enemies = new List<Fighter>();
+            Enemies.Add(new Fighter(Content, this));
+            Enemies[0].SpawnAt(new Vector2(600,600));
+            Enemies[0].SetDestination(new Vector2(100,-250));
             this.screenSize = screenDimensions;
             Graphics = Graph;
 
@@ -184,18 +187,22 @@ namespace HollowBack
             SSV.Update(pGameTime);
             cone.Update(pGameTime);
 
+            Enemies[0].Update();
+            Enemies[0].UpdatePositionAngle(cone);
+
             ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
             Little.Update(pGameTime);
 
             previousKeyboard = keyboard;
             previousMstate = mstate;
+            foreach (Fighter var1 in enemies) var1.UpdatePositionAngle(cone);
         }
 
         public void Draw(SpriteBatch pSpriteBatch)
         {
 
             this.SpriteBatch = pSpriteBatch;
-            foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch);
+            foreach (Enemy var1 in enemies) if (var1.IsVisible) var1.Draw(SpriteBatch);
             foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch);
             foreach (Right_HUD R_H in R_hud) R_H.Draw(pSpriteBatch);
             Little.Draw(pSpriteBatch);

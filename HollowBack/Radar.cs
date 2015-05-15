@@ -13,7 +13,14 @@ namespace HollowBack
         public Radar(ContentManager pContent, Scene Cene)
             : base(pContent, "Radar", Cene)
         {
+
         }
+
+        public void Update()
+        {
+            
+        }
+
         public override void Draw(SpriteBatch pSpriteBatch)
         {
             pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,

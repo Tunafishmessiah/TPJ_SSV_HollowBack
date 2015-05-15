@@ -40,14 +40,13 @@ namespace HollowBack
         public override void Update(GameTime pGameTime)
         {
             Point mouse = scene.Mstate.Position;
-
+         //   Console.WriteLine(this.Position);
             if (scene.Mstate.LeftButton != scene.PreviousMstate.LeftButton)
             {
                 if (scene.Mstate.LeftButton == ButtonState.Pressed && Lockin == false)
                 {
                     Lockin = true;
                     stopAngle = this.angle;
-                    Console.WriteLine(stopAngle);
                 }
                 else if (scene.Mstate.LeftButton == ButtonState.Pressed && Lockin == true)
                 {
@@ -61,7 +60,6 @@ namespace HollowBack
                 float a = (float)(mouse.X - this.scene.ScreenSize.X / 2);
                 float l = (float)(mouse.Y - this.scene.ScreenSize.Y / 2);
                 this.angle = (float)(Math.Atan2(l, a));
-                Console.WriteLine(this.angle);
             }
             base.Update(pGameTime);
         }
