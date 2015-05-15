@@ -19,6 +19,42 @@ namespace HollowBack
         private bool lighty;
         private bool Click;
 
+        public SpriteFont Font
+        {
+            get { return font; }
+            set { font = value; }
+        }
+        public string Function
+        {
+            get { return function; }
+            set { function= value; }
+        }
+        public Keys funcKey
+        {
+            get { return FuncKey; }
+            set { FuncKey = value; }
+        }
+        public Texture2D Original
+        {
+            get { return original; }
+            set { original = value; }
+        }
+        public Texture2D M_Lighty
+        {
+            get { return Lighty; }
+            set { Lighty = value; }
+        }
+        public bool Light
+        {
+            get { return lighty; }
+            set { lighty = value; }
+        }
+        public bool click
+        {
+            get { return Click; }
+            set { Click = value; }
+        }
+
 
         public HUD_icon(ContentManager pContent, Scene scene, int func)
             : base(pContent, "SideBlocks",scene)
@@ -74,7 +110,7 @@ namespace HollowBack
                     - (this.font.MeasureString(function).Y / 2)), Color.Red);
         }
 
-        private void HUD_Func(int function)
+        public virtual void HUD_Func(int function)
         {
             //this function will determine what's written in the block and what key
             //needs to be pressed in order to activate it
@@ -103,6 +139,10 @@ namespace HollowBack
                 case (5):
                     this.function = "Torpedos";
                     FuncKey = Keys.D6;
+                    break;
+                case (6):
+                    break;
+                case (7):
                     break;
             }
         }

@@ -43,6 +43,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="HUD_icon.cs" />
     <Compile Include="Ladar.cs" />
+    <Compile Include="Right_HUD.cs" />
     <Compile Include="ScreenMouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +87,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SideLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SideRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SideRight2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SSV_HollowBack.png">

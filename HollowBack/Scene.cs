@@ -16,6 +16,7 @@ namespace HollowBack
         private SpriteBatch spriteBatch;
         private List<Enemy> enemies;
         private List<HUD_icon> hud;
+        private List<Right_HUD> R_hud;
         private SSV_HollowBack SSV;
         private Targeting cone;
         private Ladar ladar;
@@ -40,6 +41,11 @@ namespace HollowBack
             private set { enemies = value; }
         }
 
+        public List<Right_HUD> R_HUD
+        {
+            get { return R_hud; }
+            set { R_hud = value; }
+        }
         public List<HUD_icon> HUD
         {
             get { return hud; }
@@ -139,6 +145,7 @@ namespace HollowBack
 
             //creating sidebars
 
+            //Left ones
             HUD_icon BellowHud = new HUD_icon(pContent,this,0);
             float yHeight = screenSize.Y / BellowHud.Texture.Height;
             int intYHeight = (int)yHeight;
@@ -152,6 +159,17 @@ namespace HollowBack
                 BellowHud.Position =new Vector2(0,((i+1)*(Per * BellowHud.Texture.Height) + (i*BellowHud.Texture.Height)));
                 hud.Add(BellowHud);
             }
+
+            //Right ones
+            R_hud = new List<Right_HUD>();
+            
+            for (int i = 0; i < 3; i++)
+            {
+                Right_HUD argh = new Right_HUD(pContent, this, i);
+                R_hud.Add(argh);
+            }
+
+
         }
 
         public void Update(GameTime pGameTime)
@@ -161,6 +179,7 @@ namespace HollowBack
 
             foreach (Enemy var1 in enemies) var1.Update(pGameTime);
             foreach (Sprite HUD in hud) HUD.Update(pGameTime);
+            foreach (Right_HUD R_H in R_hud) R_H.Update(pGameTime);
             
             SSV.Update(pGameTime);
             cone.Update(pGameTime);
@@ -178,6 +197,7 @@ namespace HollowBack
             this.SpriteBatch = pSpriteBatch;
             foreach (Enemy var1 in enemies) if (var1.IsActive) var1.Draw(SpriteBatch);
             foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch);
+            foreach (Right_HUD R_H in R_hud) R_H.Draw(pSpriteBatch);
             Little.Draw(pSpriteBatch);
             cone.Draw(spriteBatch);
             SSV.Draw(SpriteBatch);
