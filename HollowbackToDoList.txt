@@ -1,6 +1,6 @@
 -> Targeting Zone (Cone) [DONE]
 
--> Targeting Lazors (Ladar)
+-> Targeting Lazors (Ladar) [DONE]
 
 -> Enemies
 	-> Spawn (Randomized (type+location))

@@ -22,7 +22,7 @@ namespace HollowBack
             : base(pContent, "Ladar", Cene)
         {
             this.Origin = new Vector2(this.Texture.Width/2-4, this.Texture.Height/2+5);
-            this.Position = new Vector2(this.scene.ScreenSize.X / 2+3, this.scene.ScreenSize.Y / 2);
+            this.Position = new Vector2(this.scene.ScreenSize.X / 2 +3, this.scene.ScreenSize.Y / 2+6);
 
         }
 
