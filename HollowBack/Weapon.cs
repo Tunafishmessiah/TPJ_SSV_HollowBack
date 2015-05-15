@@ -12,6 +12,8 @@ namespace HollowBack
 
         private float cooldown;
         private float range;
+        private float repair;
+        private float cooldownTime;
         private float repairTime;
 
         #endregion
@@ -28,6 +30,18 @@ namespace HollowBack
         {
             get { return range; }
             protected set { range = value; }
+        }
+
+        public float Repair
+        {
+            get { return repair; }
+            protected set { repair = value; }
+        }
+
+        public float CooldownTime
+        {
+            get { return cooldownTime; }
+            protected set { cooldownTime = value; }
         }
 
         public float RepairTime
@@ -49,7 +63,7 @@ namespace HollowBack
 
         public void Update(Vector2 pPosition, Vector2 pTarget)
         {
-            if (RepairTime <= 0f)
+            if (Repair <= 0f)
             {
                 if (Cooldown <= 0f)
                 {
