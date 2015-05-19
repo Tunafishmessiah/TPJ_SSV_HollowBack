@@ -14,7 +14,10 @@ namespace HollowBack
         #region Fields
 
         private SpriteBatch spriteBatch;
-        private List<Fighter> enemies;
+        private List<Fighter> enemyFighter;
+        private List<Frigate> enemyFrigate;
+        private List<Carrier> enemyCarrier;
+        private List<Dreadnought> enemyDreadnought;
         private List<HUD_icon> hud;
         private List<Right_HUD> R_hud;
         private SSV_HollowBack SSV;
@@ -35,10 +38,28 @@ namespace HollowBack
             set { spriteBatch = value; }
         }
 
-        public List<Fighter> Enemies
+        public List<Fighter> EnemyFighter
         {
-            get { return enemies; }
-            private set { enemies = value; }
+            get { return enemyFighter; }
+            private set { enemyFighter = value; }
+        }
+
+        public List<Frigate> EnemyFrigate
+        {
+            get { return enemyFrigate; }
+            private set { enemyFrigate = value; }
+        }
+
+        public List<Carrier> EnemyCarrier
+        {
+            get { return enemyCarrier; }
+            private set { enemyCarrier = value; }
+        }
+
+        public List<Dreadnought> EnemyDreadnought
+        {
+            get { return enemyDreadnought; }
+            private set { enemyDreadnought = value; }
         }
 
         public List<Right_HUD> R_HUD
@@ -106,10 +127,8 @@ namespace HollowBack
         {
             //Loading stuff and starting up some needed variables
             this.spriteBatch = pSpriteBatch;
-            Enemies = new List<Fighter>();
-            Enemies.Add(new Fighter(Content, this));
-            Enemies[0].SpawnAt(new Vector2(600,600));
-            Enemies[0].SetDestination(new Vector2(100,-250));
+            EnemyFighter = new List<Fighter>();
+            AddFigther(Content, new Vector2(600, 600), new Vector2(100, -250));
             this.screenSize = screenDimensions;
             Graphics = Graph;
 
@@ -128,11 +147,49 @@ namespace HollowBack
             Sprite var = new Sprite(pContent, pAssetName,this);
         }
 
-        public void AddEnemy(ContentManager pContent, Vector2 pPosition)
+        #region Add Enemy
+
+        public void AddFigther(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
         {
-            //Enemy var = new Enemy(pContent, pPosition, this);
-            //enemies.Add(var);
+            int i = 0;
+            if (EnemyFighter.Count != 0) while (EnemyFighter[i] != null) i++;
+            Fighter var = new Fighter(pContent, this, i);
+            EnemyFighter.Insert(i, var);
+            EnemyFighter[i].SpawnAt(pPosition);
+            EnemyFighter[i].SetDestination(pDestination);
         }
+
+        public void AddFrigate(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
+        {
+            int i = 0;
+            if (EnemyFrigate.Count != 0) while (EnemyFrigate[i] != null) i++;
+            Frigate var = new Frigate(pContent, this, i);
+            EnemyFrigate.Insert(i, var);
+            EnemyFrigate[i].SpawnAt(pPosition);
+            EnemyFrigate[i].SetDestination(pDestination);
+        }
+
+        public void AddCarrier(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
+        {
+            int i = 0;
+            if (EnemyCarrier.Count != 0) while (EnemyCarrier[i] != null) i++;
+            Carrier var = new Carrier(pContent, this, i);
+            EnemyCarrier.Insert(i, var);
+            EnemyCarrier[i].SpawnAt(pPosition);
+            EnemyCarrier[i].SetDestination(pDestination);
+        }
+
+        public void AddDreadnought(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
+        {
+            int i = 0;
+            if (EnemyDreadnought.Count != 0) while (EnemyDreadnought[i] != null) i++;
+            Dreadnought var = new Dreadnought(pContent, this, i);
+            EnemyDreadnought.Insert(i, var);
+            EnemyDreadnought[i].SpawnAt(pPosition);
+            EnemyDreadnought[i].SetDestination(pDestination);
+        }
+
+        #endregion
 
         public void MakeHUD( ContentManager pContent)
         {
@@ -180,29 +237,32 @@ namespace HollowBack
             keyboard = Keyboard.GetState();
             mstate = Mouse.GetState();
 
-            foreach (Enemy var1 in enemies) var1.Update(pGameTime);
+            foreach (Enemy var1 in enemyFighter) var1.Update(pGameTime);
             foreach (Sprite HUD in hud) HUD.Update(pGameTime);
             foreach (Right_HUD R_H in R_hud) R_H.Update(pGameTime);
             
             SSV.Update(pGameTime);
             cone.Update(pGameTime);
 
-            Enemies[0].Update();
-            Enemies[0].UpdatePositionAngle(cone);
+            foreach (Fighter Enemies in EnemyFighter)
+            {
+                Enemies.Update();
+                Enemies.UpdatePositionAngle(cone);
+            }
 
             ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
             Little.Update(pGameTime);
 
             previousKeyboard = keyboard;
             previousMstate = mstate;
-            foreach (Fighter var1 in enemies) var1.UpdatePositionAngle(cone);
+            foreach (Fighter var1 in EnemyFighter) var1.UpdatePositionAngle(cone);
         }
 
         public void Draw(SpriteBatch pSpriteBatch)
         {
 
             this.SpriteBatch = pSpriteBatch;
-            foreach (Enemy var1 in enemies) if (var1.IsVisible) var1.Draw(SpriteBatch);
+            foreach (Enemy var1 in EnemyFighter) if (var1.IsVisible) var1.Draw(SpriteBatch);
             foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch);
             foreach (Right_HUD R_H in R_hud) R_H.Draw(pSpriteBatch);
             Little.Draw(pSpriteBatch);

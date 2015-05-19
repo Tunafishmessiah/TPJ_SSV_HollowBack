@@ -16,10 +16,12 @@ namespace HollowBack
         private bool isVisible; // Is the ship within visible range.
         private bool isMoving; // Is the ship moving.
         private bool isUnknown; // As the ship been identified.
+        private bool fireWeapon;
         private Vector2 destination; // Where the ship is heading.
         private float maxSpeed; // Maximum flight speed.
         private float accelaration; // Rate at which the ship accelarates.
         private Vector2 target; // Position of the target.
+        private Point id;
 
         #endregion
 
@@ -41,6 +43,12 @@ namespace HollowBack
         {
             get { return isUnknown; }
             set { isUnknown = value; }
+        }
+
+        public bool FireWeapon
+        {
+            get { return fireWeapon; }
+            set { fireWeapon = value; }
         }
 
         public Vector2 Destination
@@ -65,6 +73,12 @@ namespace HollowBack
         {
             get { return target; }
             set { target = value; }
+        }
+
+        public Point ID
+        {
+            get { return id; }
+            protected set { id = value; }
         }
 
         #endregion

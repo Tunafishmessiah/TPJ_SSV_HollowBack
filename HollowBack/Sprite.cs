@@ -27,6 +27,8 @@ namespace HollowBack
         private Scene SceneA;
         private Vector2 origin;
         private float scale;
+        private Rectangle hitbox;
+
         #endregion
 
         #region Properties
@@ -119,6 +121,12 @@ namespace HollowBack
             set { scale = value; }
         }
 
+        public Rectangle Hitbox
+        {
+            get { return hitbox; }
+            protected set { hitbox = value; }
+        }
+
         #endregion
 
         public Sprite(ContentManager pContent, string pAssetName, Scene Cene)
@@ -132,6 +140,7 @@ namespace HollowBack
             Direction = Vector2.Zero;
             angle = 0;
             Tangle = new Rectangle(1, 1, this.Texture.Width, this.Texture.Height);
+            Hitbox = new Rectangle(0, 0, this.Texture.Width, this.Texture.Height);
             origin = Vector2.Zero;
             Scale = 1;
             this.scene = Cene;
@@ -143,6 +152,7 @@ namespace HollowBack
 
         public virtual void Draw(SpriteBatch pSpriteBatch)
         {
+            Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
             pSpriteBatch.Draw(Texture,Position, Tangle, Color.White,
                 angle,Origin,Scale,Effect, 1f); 
         }

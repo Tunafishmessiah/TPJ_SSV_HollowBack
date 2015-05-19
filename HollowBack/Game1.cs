@@ -44,7 +44,6 @@ namespace HollowBack
 
         protected override void Initialize()
         {
-            Fig1 = new Fighter(Content, game);
             base.Initialize();
         }
 
@@ -86,7 +85,6 @@ namespace HollowBack
                 else if (State == GameState.Gameplay)
                 {
                     game.Update(gameTime);
-                    Fig1.Update(game.Cone);
                 }
                 else if (State == GameState.Gameover)
                 { }
@@ -101,7 +99,6 @@ namespace HollowBack
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            if (Fig1.IsVisible) Fig1.Draw(spriteBatch);
             game.Draw(spriteBatch);
             spriteBatch.End();
 
