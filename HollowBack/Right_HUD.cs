@@ -47,7 +47,7 @@ namespace HollowBack
             else
             {
                 Original = pContent.Load<Texture2D>("SideRight");
-                Scale = new Vector2(1.3f, 1f);
+                Scale = new Vector2(1.45f, 1f);
             }
 
             this.Texture = original;
@@ -59,6 +59,7 @@ namespace HollowBack
         {
             if (!st)
             {
+                if (Function != 2) this.Position = new Vector2(this.Position.X +15, this.Position.Y);
                 this.Texture = original;
                 this.TangleUpdate();
                 st = true;
@@ -138,7 +139,7 @@ namespace HollowBack
                 }
             }
 
-            int length = 6;
+            int length = 7;
 
             if (Moves.Count > length )
             {
@@ -158,21 +159,33 @@ namespace HollowBack
         {
             Vector2 InitialPosition = this.Position + new Vector2(7,3);
             float distance = (this.scene.ScreenSize.Y - this.Position.Y) / 8;
-            foreach (string Move in Moves)
+            Color color = Color.Green;
+
+            if (Moves.Count > 0)
             {
-                if (Move != null)
+                for (int i = Moves.Count-1; i >= 0; i--)
                 {
-
-                    if (this.font.MeasureString(Move).Y < distance)
-                        pSpriteBatch.DrawString(this.font, Move, InitialPosition, Color.Green);
-                    else
+                    if (Moves[i] != null)
                     {
-                        pSpriteBatch.DrawString(this.font, Move, new Vector2(InitialPosition.X, InitialPosition.Y), Color.Green);
-                        InitialPosition = new Vector2(InitialPosition.X, InitialPosition.Y - distance + this.font.MeasureString(Move).Y);
+                        if (i == Moves.Count - 1)
+                        { 
+                            //color = Color.LimeGreen;
+                            color = Color.Gold;
+                        }
+
+                        else color = Color.LimeGreen ;
+
+                        if (this.font.MeasureString(Moves[i]).Y < distance)
+                            pSpriteBatch.DrawString(this.font, Moves[i], InitialPosition, color);
+                        else
+                        {
+                            pSpriteBatch.DrawString(this.font, Moves[i], new Vector2(InitialPosition.X, InitialPosition.Y), color);
+                            InitialPosition = new Vector2(InitialPosition.X, InitialPosition.Y - distance + this.font.MeasureString(Moves[i]).Y);
+                        }
+
+                        InitialPosition = new Vector2(InitialPosition.X, InitialPosition.Y + distance);
+
                     }
-
-                    InitialPosition = new Vector2(InitialPosition.X , InitialPosition.Y+ distance);
-
                 }
             }
 
