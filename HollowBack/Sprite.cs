@@ -26,7 +26,7 @@ namespace HollowBack
         private Rectangle tangle;
         private Scene SceneA;
         private Vector2 origin;
-        private float scale;
+        private Vector2 scale;
         private Rectangle hitbox;
 
         #endregion
@@ -115,7 +115,7 @@ namespace HollowBack
             set { origin = value; }
         }
 
-        public float Scale
+        public Vector2 Scale
         {
             get { return scale; }
             set { scale = value; }
@@ -142,7 +142,7 @@ namespace HollowBack
             Tangle = new Rectangle(1, 1, this.Texture.Width, this.Texture.Height);
             Hitbox = new Rectangle(0, 0, this.Texture.Width, this.Texture.Height);
             origin = Vector2.Zero;
-            Scale = 1;
+            Scale = new Vector2(1,1);
             this.scene = Cene;
         }
 
@@ -155,6 +155,11 @@ namespace HollowBack
             Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
             pSpriteBatch.Draw(Texture,Position, Tangle, Color.White,
                 angle,Origin,Scale,Effect, 1f); 
+        }
+
+        public virtual void TangleUpdate()//needed when we change textures, or a part of it will not apear. 
+        {
+            Tangle = new Rectangle(1, 1, this.texture.Width, this.Texture.Height);
         }
     }
 }

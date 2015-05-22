@@ -36,7 +36,7 @@ namespace HollowBack
             angle = 0;
             lighty.angle = angle;
 
-            Scale = .9f;
+            Scale = new Vector2(.9f,.9f);
             lighty.Scale = Scale;
 
             //variables that will help when overing something 
@@ -65,30 +65,30 @@ namespace HollowBack
             //Making that red circle flow
             if (light)
             {
-                if (lighty.Scale > 1.2f)
+                if (lighty.Scale.X > 1.2f)
                 {
                     increase = false;
                 }
-                else if (lighty.Scale <= this.Scale-.2f)
+                else if (lighty.Scale.X <= this.Scale.X-.2f)
                 {
                     increase = true;
                 }
 
                 if (increase)
                 {
-                    lighty.Scale += .045f;
+                    lighty.Scale += new Vector2(.045f,.045f);
                 }
                 else
                 {
-                    lighty.Scale -= .045f;
+                    lighty.Scale -= new Vector2(.045f, .045f);
                 }
  
             }
 
             //updating as last the position so that it goes well with the scale, its kind of tricky even though it's fairly easy to acomplish
             this.Position = new Vector2(mp.X - Texture.Width / 2 + 2.3f, mp.Y - Texture.Height / 2 + 2);
-            this.lighty.Position = new Vector2(mp.X - (lighty.Texture.Width * lighty.Scale) / 2 ,
-                mp.Y - (lighty.Texture.Height * lighty.Scale) / 2 );
+            this.lighty.Position = new Vector2(mp.X - (lighty.Texture.Width * lighty.Scale.X) / 2 ,
+                mp.Y - (lighty.Texture.Height * lighty.Scale.Y) / 2 );
 
 
         }

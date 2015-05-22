@@ -17,7 +17,7 @@ namespace HollowBack
         private Keys FuncKey;
         private Texture2D original,Lighty;
         private bool lighty;
-        private bool Click;
+        private bool Click, pClick;
 
         public SpriteFont Font
         {
@@ -54,31 +54,38 @@ namespace HollowBack
             get { return Click; }
             set { Click = value; }
         }
+        public bool PreClick
+        {
+            get { return pClick; }
+            set { pClick = value; }
+        }
 
 
         public HUD_icon(ContentManager pContent, Scene scene, int func)
             : base(pContent, "SideBlocks",scene)
         {
             //Loading stuff that is gonna be needed further ahead
-            font = pContent.Load<SpriteFont>("RadioLand");
-            original = pContent.Load<Texture2D>("SideBlocks");
+            font = pContent.Load<SpriteFont>("RadioLand");//Loading Font
+            original = pContent.Load<Texture2D>("SideBlocks");//Loading default block skin
             Lighty = pContent.Load<Texture2D>("SideLight");//This one is to make it bright when the mouse hovers
             HUD_Func(func);
             lighty = false;
             Click = false;
+            PreClick = Click;
         }
 
         public override void Update(GameTime pGameTime)
         {
+            PreClick = Click;
             Vector2 mouse = scene.Little.Position;
 
             //Checking mouse buttons to make the block bright (or not)
             if ((scene.Mstate.LeftButton == ButtonState.Pressed && scene.PreviousMstate.LeftButton == ButtonState.Released && OnTop(mouse)) || KeyPress())
             {
-                Click = !Click;
+                Click = !Click;//Changing the variable 
                 if (Click)
                 {
-                    foreach (HUD_icon HUD in scene.HUD)
+                    foreach (HUD_icon HUD in scene.HUD)//Checking all the others hud particles to make sure they are "unchecked"
                     {
                         if (HUD != this)
                         HUD.Click = false;
@@ -86,8 +93,8 @@ namespace HollowBack
                 }
             }
 
-            if (OnTop(mouse) || Click)
-            {
+            if (OnTop(mouse) || Click)//If the mouse is on top of the selected hud particle or if it has been clicked on before
+            {//it's gonna stay highligthened
                 lighty = true;
             }
             else lighty = false;
@@ -103,11 +110,12 @@ namespace HollowBack
 
         public override void Draw(SpriteBatch pSpriteBatch)
         {
-            base.Draw(pSpriteBatch);
+
             //Drawing the text above the block. If these two draws positions are changed text will not apear!
+            base.Draw(pSpriteBatch);//Image draw
             scene.SpriteBatch.DrawString(font, function,
                 new Vector2(this.Position.X + 10, this.Position.Y + (this.Texture.Height / 2)
-                    - (this.font.MeasureString(function).Y / 2)), Color.Red);
+                    - (this.font.MeasureString(function).Y / 2)), Color.Red);//Text Draw
         }
 
         public virtual void HUD_Func(int function)

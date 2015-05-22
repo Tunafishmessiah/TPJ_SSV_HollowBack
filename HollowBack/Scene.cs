@@ -263,12 +263,12 @@ namespace HollowBack
 
             this.SpriteBatch = pSpriteBatch;
             foreach (Enemy var1 in EnemyFighter) if (var1.IsVisible) var1.Draw(SpriteBatch);
-            foreach(Sprite HUD in hud) HUD.Draw(SpriteBatch);
-            foreach (Right_HUD R_H in R_hud) R_H.Draw(pSpriteBatch);
             Little.Draw(pSpriteBatch);
             cone.Draw(spriteBatch);
             SSV.Draw(SpriteBatch);
             ladar.Draw(spriteBatch);
+            foreach (Sprite HUD in hud) HUD.Draw(SpriteBatch);
+            foreach (Right_HUD R_H in R_hud) R_H.Draw(pSpriteBatch);
         }
     }
 }
