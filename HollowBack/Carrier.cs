@@ -18,7 +18,7 @@ namespace HollowBack
 
             ID = new Point(3, pID);
 
-            MaxSpeed = 1;
+            MaxSpeed = 0.5f;
             Accelaration = 0.1f;
         }
 

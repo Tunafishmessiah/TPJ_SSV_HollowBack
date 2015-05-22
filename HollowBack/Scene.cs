@@ -128,7 +128,7 @@ namespace HollowBack
             //Loading stuff and starting up some needed variables
             this.spriteBatch = pSpriteBatch;
             EnemyFighter = new List<Fighter>();
-            AddFigther(Content, new Vector2(600, 600), new Vector2(100, -250));
+            
             this.screenSize = screenDimensions;
             Graphics = Graph;
 
@@ -189,7 +189,61 @@ namespace HollowBack
             EnemyDreadnought[i].SetDestination(pDestination);
         }
 
+        public void SpawnEnemy(ContentManager Content)
+        {
+            Random rnd = new Random();
+            int SelShip = rnd.Next(1, 5);
+            
+            #region SpawnSelection
+            int SpawnX = rnd.Next(-(int)(screenSize.X / 2), (int)screenSize.X + (int)(screenSize.X/2));
+            int SpawnY = 0;
+            //Coordenadas onde a nave vai dar spawn
+
+            if (SpawnX > 0 && SpawnX < screenSize.X) //Se a coordenada X estiver dentro do ecrã
+            {
+                int SelectY = rnd.Next(1, 3); //Seleção: Se a coordenada Y vai ser por cima ou por baixo do ecrã
+
+                if (SelectY == 1)
+                {
+                    SpawnY = rnd.Next(0 - (int)(screenSize.Y / 2), 0);
+                }
+                else //Então a coordenada Y vai ser por cima ou por baixo do ecrã, estando fora dos limites do mesmo
+                {
+                    SpawnY = rnd.Next((int)(screenSize.Y), (int)screenSize.Y + (int)(screenSize.Y / 2));
+                }
+            }
+            else //Caso contrário, então a coordenada  Y pode ser qualquer uma dentro dos limites estipulados
+            {
+                SpawnY = rnd.Next(0 - (int)(screenSize.Y / 2), (int)screenSize.Y + (int)(screenSize.Y / 2));
+            }
+            #endregion
+
+            #region DestinationSelection
+
+            switch (SelShip)
+            {
+                case 1: case 2:  
+                    
+                    
+                    break;
+
+                case 3: case 4:  break;
+            }
+
+            #endregion
+            switch (SelShip)
+            {
+                case 1: AddFigther(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
+                case 2: AddFrigate(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
+                case 3: AddCarrier(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
+                case 4: AddDreadnought(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
+            }
+        }
+
+
+
         #endregion
+
 
         public void MakeHUD( ContentManager pContent)
         {
