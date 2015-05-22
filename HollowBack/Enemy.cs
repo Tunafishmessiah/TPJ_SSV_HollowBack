@@ -100,8 +100,9 @@ namespace HollowBack
 
         public void UpdatePositionAngle(Targeting cone)
         {
-           float PA = (float)(Math.Atan2(this.Position.X, this.Position.Y));
-           Console.WriteLine(this.Position);
+           float PA = (float)(Math.Atan2(this.Position.X - 640, this.Position.Y - 360));
+           //Console.WriteLine(this.Position.ToString());
+           Console.WriteLine(PA + ":" + cone.angle);
 
            if ((PA + 0.42) > cone.angle + Math.PI / 32 && (PA - 0.42) < cone.angle - Math.PI / 32)
            {
@@ -149,7 +150,6 @@ namespace HollowBack
 
         public void SetTarget(Vector2 pTarget)
         {
-
             this.Target = pTarget;
         }
 
