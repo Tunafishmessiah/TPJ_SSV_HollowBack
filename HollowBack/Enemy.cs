@@ -21,7 +21,8 @@ namespace HollowBack
         private float maxSpeed; // Maximum flight speed.
         private float accelaration; // Rate at which the ship accelarates.
         private Vector2 target; // Position of the target.
-        private Point id;
+        private Point id; // The ships ID
+        private Weapon weaponSys; // Weapon Systems
 
         #endregion
 
@@ -79,6 +80,12 @@ namespace HollowBack
         {
             get { return id; }
             protected set { id = value; }
+        }
+
+        public Weapon WeaponSys
+        {
+            get { return weaponSys; }
+            protected set { weaponSys = value; }
         }
 
         #endregion
