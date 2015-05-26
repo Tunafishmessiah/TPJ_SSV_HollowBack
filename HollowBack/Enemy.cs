@@ -22,6 +22,7 @@ namespace HollowBack
         private float accelaration; // Rate at which the ship accelarates.
         private Vector2 target; // Position of the target.
         private Point id;
+        private int range; // Firing range
 
         #endregion
 
@@ -81,6 +82,14 @@ namespace HollowBack
             protected set { id = value; }
         }
 
+
+        public int FiringRange
+        {
+            get { return range; }
+            set { range = value; }
+        }
+
+
         #endregion
 
         public Enemy(ContentManager pContent, string pAsset, Scene scene) : base(pContent, pAsset, scene)
@@ -101,8 +110,6 @@ namespace HollowBack
         public void UpdatePositionAngle(Targeting cone)
         {
            float PA = (float)(Math.Atan2(this.Position.X - 640, this.Position.Y - 360));
-           //Console.WriteLine(this.Position.ToString());
-           Console.WriteLine(PA + ":" + cone.angle);
 
            if ((PA + 0.42) > cone.angle + Math.PI / 32 && (PA - 0.42) < cone.angle - Math.PI / 32)
            {
@@ -114,7 +121,7 @@ namespace HollowBack
            }
         }
 
-        public void UpdateMovement()
+        public void UpdateMovement(int range)
         {
 
             if (IsActive)
@@ -123,7 +130,7 @@ namespace HollowBack
                 {
                     if (Velocity < MaxSpeed) Velocity += Accelaration;
                     Position += Direction * Velocity;
-                    if (Vector2.Distance(Position, Destination) <= 100) IsMoving = false;
+                    
                 }
                 else
                 {
@@ -134,6 +141,8 @@ namespace HollowBack
             {
                 if (Velocity > 0) Velocity -= Accelaration;
             }
+
+            if (Vector2.Distance(Position, Destination) <= range) IsMoving = false;
         }
 
         public void Update(Targeting cone)
