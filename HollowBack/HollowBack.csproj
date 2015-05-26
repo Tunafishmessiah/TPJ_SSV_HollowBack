@@ -43,12 +43,14 @@
     <Compile Include="Game1.cs" />
     <Compile Include="HUD_icon.cs" />
     <Compile Include="Ladar.cs" />
+    <Compile Include="Missile.cs" />
     <Compile Include="Right_HUD.cs" />
     <Compile Include="ScreenMouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radar.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="Slug.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SSV_HollowBack.cs" />
     <Compile Include="Targeting.cs" />
