@@ -12,7 +12,7 @@ namespace HollowBack
     class Scene
     {
         #region Fields
-
+        private int GAMESTATE;
         private SpriteBatch spriteBatch;
         private List<Fighter> enemyFighter;
         private List<Frigate> enemyFrigate;
@@ -123,12 +123,13 @@ namespace HollowBack
         }
         #endregion
 
-        public Scene(SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph, ContentManager Content)
+        public Scene(int GameState,SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph, ContentManager Content)
         {
-            //Loading stuff and starting up some needed variables
+            GAMESTATE = GameState;
+
+            //Loading "master" variables
             this.spriteBatch = pSpriteBatch;
-            EnemyFighter = new List<Fighter>();
-            
+
             this.screenSize = screenDimensions;
             Graphics = Graph;
 
@@ -139,6 +140,19 @@ namespace HollowBack
 
             keyboard = Keyboard.GetState();
             previousKeyboard = keyboard;
+
+            switch (GAMESTATE)
+            {
+                case 1:
+                    break;
+                case 2:
+                    //Loading stuff and starting up some needed variables
+                    EnemyFighter = new List<Fighter>();
+
+                    break;
+                case 3:
+                    break;
+        }
 
         }
 

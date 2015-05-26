@@ -50,8 +50,23 @@ namespace HollowBack
         protected override void LoadContent()
         {            
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            game = new Scene(spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y), GraphicsDevice, Content);
+            int sendState;
+            switch (State)
+            {
+                case GameState.Start:
+                    sendState = 1;
+                    break;
+                case GameState.Gameplay:
+                    sendState = 2;
+                    break;
+                case GameState.Gameover:
+                    sendState = 3;
+                    break;
+                default:
+                    sendState = 0;
+                    break;
+            }
+            game = new Scene(sendState,spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y), GraphicsDevice, Content);
             game.MakeHUD(Content);
         }
 
@@ -69,6 +84,7 @@ namespace HollowBack
                 {
                     //We are gonna unload objects here, when we are transitioning from one state to the other.
                     case(GameState.Gameplay):
+                        
                         break;
                     case(GameState.Gameover):
                         break;
