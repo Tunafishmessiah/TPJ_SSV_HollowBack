@@ -17,6 +17,7 @@ namespace HollowBack
             IsActive = false;
 
             ID = new Point(2, pID);
+            WeaponSys = new Weapon(10, 10); // Set the weapon systems
 
             MaxSpeed = 0.7f;
             Accelaration = 0.1f;
@@ -24,7 +25,7 @@ namespace HollowBack
 
         public void Update()
         {
-            UpdateMovement();
+            UpdateMovement(100);
         }
     }
 }

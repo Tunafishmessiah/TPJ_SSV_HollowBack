@@ -27,6 +27,7 @@ namespace HollowBack
         Fighter Fig1;
         GameState State;
         GameState Previous;
+     
 
         public Game1()
             : base()
@@ -100,7 +101,7 @@ namespace HollowBack
                 }
                 else if (State == GameState.Gameplay)
                 {
-                    game.Update(gameTime);
+                    game.Update(gameTime, Content);
                 }
                 else if (State == GameState.Gameover)
                 { }

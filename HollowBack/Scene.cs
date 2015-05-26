@@ -28,6 +28,7 @@ namespace HollowBack
         private ScreenMouse little;
         private MouseState mstate, previousMstate;
         private KeyboardState keyboard, previousKeyboard;
+        int SpawnBlock = 0;
         #endregion
 
         #region Properties
@@ -127,11 +128,10 @@ namespace HollowBack
         {
             GAMESTATE = GameState;
 
+            Graphics = Graph;
             //Loading "master" variables
             this.spriteBatch = pSpriteBatch;
-
             this.screenSize = screenDimensions;
-            Graphics = Graph;
 
             //This variable were made so that we can save some processing time, we can acess it
             //from any variable that's called here, so we don't need to call them in almost every single thing we have on screen
@@ -148,7 +148,9 @@ namespace HollowBack
                 case 2:
                     //Loading stuff and starting up some needed variables
                     EnemyFighter = new List<Fighter>();
-
+                    EnemyFrigate = new List<Frigate>();
+                    EnemyCarrier = new List<Carrier>();
+                    EnemyDreadnought = new List<Dreadnought>();
                     break;
                 case 3:
                     break;
@@ -166,7 +168,7 @@ namespace HollowBack
         public void AddFigther(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
         {
             int i = 0;
-            if (EnemyFighter.Count != 0) while (EnemyFighter[i] != null) i++;
+            if (EnemyFighter.Count != 0) while (i < EnemyFighter.Count && EnemyFighter[i] != null) i++;
             Fighter var = new Fighter(pContent, this, i);
             EnemyFighter.Insert(i, var);
             EnemyFighter[i].SpawnAt(pPosition);
@@ -176,7 +178,7 @@ namespace HollowBack
         public void AddFrigate(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
         {
             int i = 0;
-            if (EnemyFrigate.Count != 0) while (EnemyFrigate[i] != null) i++;
+            if (EnemyFrigate.Count != 0) while (i < EnemyFrigate.Count && EnemyFrigate[i] != null) i++;
             Frigate var = new Frigate(pContent, this, i);
             EnemyFrigate.Insert(i, var);
             EnemyFrigate[i].SpawnAt(pPosition);
@@ -186,7 +188,7 @@ namespace HollowBack
         public void AddCarrier(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
         {
             int i = 0;
-            if (EnemyCarrier.Count != 0) while (EnemyCarrier[i] != null) i++;
+            if (EnemyCarrier.Count != 0) while (i < EnemyCarrier.Count && EnemyCarrier[i] != null) i++;
             Carrier var = new Carrier(pContent, this, i);
             EnemyCarrier.Insert(i, var);
             EnemyCarrier[i].SpawnAt(pPosition);
@@ -196,7 +198,7 @@ namespace HollowBack
         public void AddDreadnought(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
         {
             int i = 0;
-            if (EnemyDreadnought.Count != 0) while (EnemyDreadnought[i] != null) i++;
+            if (EnemyDreadnought.Count != 0) while (i < EnemyDreadnought.Count && EnemyDreadnought[i] != null) i++;
             Dreadnought var = new Dreadnought(pContent, this, i);
             EnemyDreadnought.Insert(i, var);
             EnemyDreadnought[i].SpawnAt(pPosition);
@@ -234,23 +236,18 @@ namespace HollowBack
 
             #region DestinationSelection
 
-            switch (SelShip)
-            {
-                case 1: case 2:  
-                    
-                    
-                    break;
+            int DestX = 640;
+            int DestY = 360;
 
-                case 3: case 4:  break;
-            }
 
             #endregion
+
             switch (SelShip)
             {
-                case 1: AddFigther(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
-                case 2: AddFrigate(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
-                case 3: AddCarrier(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
-                case 4: AddDreadnought(Content, new Vector2(SpawnX, SpawnY), new Vector2(100, -250)); break;
+                case 1: AddFigther(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
+                case 2: AddFrigate(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
+                case 3: AddCarrier(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
+                case 4: AddDreadnought(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
             }
         }
 
@@ -300,7 +297,7 @@ namespace HollowBack
 
         }
 
-        public void Update(GameTime pGameTime)
+        public void Update(GameTime pGameTime, ContentManager Content)
         {
             keyboard = Keyboard.GetState();
             mstate = Mouse.GetState();
@@ -320,6 +317,13 @@ namespace HollowBack
 
             ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
             Little.Update(pGameTime);
+
+            if (SpawnBlock == 50)
+            {
+                SpawnEnemy(Content);
+                SpawnBlock = 0;
+            }
+            else SpawnBlock += 1;
 
             previousKeyboard = keyboard;
             previousMstate = mstate;

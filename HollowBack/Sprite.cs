@@ -148,6 +148,7 @@ namespace HollowBack
 
         public virtual void Update(GameTime pGameTime)
         {
+
         }
 
         public virtual void Draw(SpriteBatch pSpriteBatch)

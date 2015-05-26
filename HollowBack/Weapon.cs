@@ -15,6 +15,7 @@ namespace HollowBack
         private float repair;
         private float cooldownTime;
         private float repairTime;
+        private bool canFire;
 
         #endregion
 
@@ -50,14 +51,25 @@ namespace HollowBack
             protected set { repairTime = value; }
         }
 
-        #endregion
-
-        public Weapon()
+        public bool CanFire
         {
-
+            get { return canFire; }
+            protected set { canFire = value; }
         }
 
-        //public void FireWeapon();
+        #endregion
+
+        public Weapon(float pCooldownTime, float pRepairTime)
+        {
+            CooldownTime = pCooldownTime;
+            RepairTime = pRepairTime;
+        }
+
+        public void FireWeapon()
+        {
+            Cooldown = CooldownTime;
+            CanFire = false;
+        }
 
         public void RepairWeapon()
         {
@@ -70,8 +82,7 @@ namespace HollowBack
             {
                 if (Cooldown <= 0f)
                 {
-                    if (Vector2.Distance(pPosition, pTarget) < Range) ;
-                        //FireWeapon();
+                    if (Vector2.Distance(pPosition, pTarget) < Range) CanFire = true;
                 }
                 else Cooldown -= 0.1f;
             }
