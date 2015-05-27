@@ -39,7 +39,7 @@ namespace HollowBack
                 case 1: // Missile
                     Health -= 2;
                     break;
-                case 2: // Railgun
+                case 2: // Slug
                     Health -= 5;
                     break;
                 case 3: // Particle Cannon

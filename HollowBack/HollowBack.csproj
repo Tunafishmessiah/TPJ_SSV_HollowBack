@@ -43,6 +43,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="HUD_icon.cs" />
     <Compile Include="Ladar.cs" />
+    <Compile Include="Laser.cs" />
     <Compile Include="Missile.cs" />
     <Compile Include="Right_HUD.cs" />
     <Compile Include="ScreenMouse.cs" />
