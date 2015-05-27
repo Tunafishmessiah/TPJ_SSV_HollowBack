@@ -121,16 +121,17 @@ namespace HollowBack
 
         public void UpdatePositionAngle(Targeting cone)
         {
-           float PA = (float)(Math.Atan2(this.Position.X - 640, this.Position.Y - 360));
+            float PA = (float)(Math.Atan2(this.Position.Y, this.Position.X));
+           // Console.WriteLine(PA);
 
-           if ((PA + 0.42) > cone.angle + Math.PI / 32 && (PA - 0.42) < cone.angle - Math.PI / 32)
-           {
-               IsVisible = true;
-           }
-           else
-           {
-               IsVisible = false;
-           }
+            if ((PA + 0.2 > cone.angle + Math.PI / 32 && (PA - 0.2) < cone.angle - Math.PI / 32))
+            {
+                IsVisible = true;
+            }
+            else
+            {
+                IsVisible = false;
+            }
         }
 
         public void UpdateMovement(int range)

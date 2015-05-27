@@ -39,7 +39,7 @@ namespace HollowBack
                 {
                     this.angle = aux;
                     base.Update(pGameTime);
-                   // Console.WriteLine(this.angle);
+                   //Console.WriteLine(this.angle);
                 }
             }
             else
@@ -51,8 +51,8 @@ namespace HollowBack
 
         public override void Draw(SpriteBatch pSpriteBatch)
         {
-         if (scene.Cone.Lockin == true)
-             pSpriteBatch.Draw(Texture, Position, Tangle, Color.White,angle, Origin, 1, this.Effects, 1f);
+            if (scene.Cone.Lockin == true)
+                pSpriteBatch.Draw(Texture, Position, Tangle, Color.White, angle, Origin, 1, this.Effects, 1f);
         }
     }
 }

@@ -20,8 +20,8 @@ namespace HollowBack
             WeaponSys = new Weapon(10, 10); // Set the weapon systems
             Health = 10;
 
-            MaxSpeed = 0.4f;
-            Accelaration = 0.1f;
+            MaxSpeed = 0.2f;
+            Accelaration = 0.3f;
                 
         }
 
