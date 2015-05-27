@@ -11,7 +11,13 @@ namespace HollowBack
 {
     class Scene
     {
+
         #region Fields
+        //Global
+        private ScreenMouse little;
+        private MouseState mstate, previousMstate;
+        private KeyboardState keyboard, previousKeyboard;
+        //Gameplay
         private int GAMESTATE;
         private SpriteBatch spriteBatch;
         private List<Fighter> enemyFighter;
@@ -25,14 +31,20 @@ namespace HollowBack
         private Ladar ladar;
         private Vector2 screenSize;
         private GraphicsDevice graphics;
-        private ScreenMouse little;
-        private MouseState mstate, previousMstate;
-        private KeyboardState keyboard, previousKeyboard;
         int SpawnBlock = 0;
+
+        //Start
+        private HUD_icon Start, End;
+
+        //Game Over;
         #endregion
 
         #region Properties
-
+        public int Game_State
+        {
+            get { return GAMESTATE; }
+            set { this.GAMESTATE = value; }
+        }
         public SpriteBatch SpriteBatch
         {
             get { return spriteBatch; }
@@ -141,27 +153,89 @@ namespace HollowBack
             keyboard = Keyboard.GetState();
             previousKeyboard = keyboard;
 
+            Little = new ScreenMouse(Content, this);
+
+            MakeHUD(Content);
+
+            switch (GAMESTATE)
+            {
+                    //Main Menu
+                case 1:
+                    Start_Load(GameState, pSpriteBatch, Content);
+                    break;
+                    //Gameplay
+                case 2:
+                    Gameplay_Load(GameState,pSpriteBatch,Content);
+                    break;
+                    //GameOver
+                case 3:
+                    End_Load(GameState, pSpriteBatch, Content);
+                    break;
+            }
+        }
+
+        public void UnloadContent()
+        {
+
+        }
+
+        public int Update(int GameState,GameTime pGameTime, ContentManager Content)
+        {
+            GAMESTATE = GameState;
+
+            keyboard = Keyboard.GetState();
+            mstate = Mouse.GetState();
+
+            Little.Update(pGameTime);
+
             switch (GAMESTATE)
             {
                 case 1:
+                    Start_Update(GameState, pGameTime, Content);
                     break;
+
                 case 2:
-                    //Loading stuff and starting up some needed variables
-                    EnemyFighter = new List<Fighter>();
-                    EnemyFrigate = new List<Frigate>();
-                    EnemyCarrier = new List<Carrier>();
-                    EnemyDreadnought = new List<Dreadnought>();
+                    Gameplay_Update(GameState,pGameTime,Content);
                     break;
+
                 case 3:
+                    End_Update(GameState, pGameTime, Content);
                     break;
+            }
+
+            previousKeyboard = keyboard;
+            previousMstate = mstate;
+            return GAMESTATE;
         }
 
+        public void Draw(SpriteBatch pSpriteBatch)
+        {
+            this.SpriteBatch = pSpriteBatch;
+
+            switch (GAMESTATE)
+            {
+                case 1:
+                    Start_Draw(pSpriteBatch);
+                    break;
+
+                case 2:
+                    Gameplay_Draw(pSpriteBatch);
+                    break;
+
+                case 3:
+                    End_Draw(pSpriteBatch);
+                    break;
+
+            }
+
+            Little.Draw(pSpriteBatch);
         }
 
         public void AddSprite(ContentManager pContent, String pAssetName)
         {
             Sprite var = new Sprite(pContent, pAssetName,this);
         }
+
 
         #region Add Enemy
 
@@ -256,56 +330,37 @@ namespace HollowBack
         #endregion
 
 
-        public void MakeHUD( ContentManager pContent)
+
+#region Start_Code
+        private void Start_Load(int GameState, SpriteBatch pSpriteBatch, ContentManager Content)
         {
-            SSV = new SSV_HollowBack(pContent, this);
-            cone = new Targeting(pContent, this);
+            MakeHUD(Content);
+        }
+        private void Start_Update(int GameState, GameTime pGameTime, ContentManager Content)
+        {
+            foreach (Sprite HUD in hud) HUD.Update(pGameTime);
+        }
+        private void Start_Draw(SpriteBatch pSpriteBatch)
+        {
+            foreach (Sprite HUD in hud) HUD.Draw(SpriteBatch);
+        }
+#endregion
 
-            ladar = new Ladar(pContent, this);
-
-            Little = new ScreenMouse(pContent, this);
-
-
-            hud = new List<HUD_icon>();
-
-            //creating sidebars
-
-            //Left ones
-            HUD_icon BellowHud = new HUD_icon(pContent,this,0);
-            float yHeight = screenSize.Y / BellowHud.Texture.Height;
-            int intYHeight = (int)yHeight;
-            Vector2 position = Vector2.Zero;
-
-            float Per = yHeight-intYHeight;
-
-            for (int i = 0; i < 6; i++)
-            {
-                BellowHud = new HUD_icon(pContent,this,i);
-                BellowHud.Position =new Vector2(0,((i+1)*(Per * BellowHud.Texture.Height) + (i*BellowHud.Texture.Height)));
-                hud.Add(BellowHud);
-            }
-
-            //Right ones
-            R_hud = new List<Right_HUD>();
-            
-            for (int i = 0; i < 3; i++)
-            {
-                Right_HUD argh = new Right_HUD(pContent, this, i);
-                R_hud.Add(argh);
-            }
-
-
+#region Gameplay_Code
+        private void Gameplay_Load(int GameState, SpriteBatch pSpriteBatch,  ContentManager Content)
+        {                    //Loading stuff and starting up some needed variables
+            EnemyFighter = new List<Fighter>();
+            EnemyFrigate = new List<Frigate>();
+            EnemyCarrier = new List<Carrier>();
+            EnemyDreadnought = new List<Dreadnought>();
         }
 
-        public void Update(GameTime pGameTime, ContentManager Content)
+        private void Gameplay_Update(int GameState, GameTime pGameTime, ContentManager Content)
         {
-            keyboard = Keyboard.GetState();
-            mstate = Mouse.GetState();
-
             foreach (Enemy var1 in enemyFighter) var1.Update(pGameTime);
             foreach (Sprite HUD in hud) HUD.Update(pGameTime);
             foreach (Right_HUD R_H in R_hud) R_H.Update(pGameTime);
-            
+
             SSV.Update(pGameTime);
             cone.Update(pGameTime);
 
@@ -316,7 +371,6 @@ namespace HollowBack
             }
 
             ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
-            Little.Update(pGameTime);
 
             if (SpawnBlock == 50)
             {
@@ -325,22 +379,83 @@ namespace HollowBack
             }
             else SpawnBlock += 1;
 
-            previousKeyboard = keyboard;
-            previousMstate = mstate;
             foreach (Fighter var1 in EnemyFighter) var1.UpdatePositionAngle(cone);
         }
 
-        public void Draw(SpriteBatch pSpriteBatch)
+        private void Gameplay_Draw(SpriteBatch pSpriteBatch)
         {
-
-            this.SpriteBatch = pSpriteBatch;
             foreach (Enemy var1 in EnemyFighter) if (var1.IsVisible) var1.Draw(SpriteBatch);
-            Little.Draw(pSpriteBatch);
             cone.Draw(spriteBatch);
             SSV.Draw(SpriteBatch);
             ladar.Draw(spriteBatch);
             foreach (Sprite HUD in hud) HUD.Draw(SpriteBatch);
-            foreach (Right_HUD R_H in R_hud) R_H.Draw(pSpriteBatch);
+            foreach (Right_HUD R_H in R_hud) R_H.Draw(SpriteBatch); 
+        }
+#endregion
+
+#region End_Code
+        private void End_Load(int GameState, SpriteBatch pSpriteBatch, ContentManager Content)
+        { }
+        private void End_Update(int GameState, GameTime pGameTime, ContentManager Content)
+        { }
+        private void End_Draw(SpriteBatch pSpriteBatch)
+        { }
+        #endregion
+
+
+        public void MakeHUD( ContentManager pContent)
+        {
+            switch(Game_State)
+            {
+                case 1:
+                    hud = new List<HUD_icon>();
+                    Start = new HUD_icon(pContent,this,6);
+                    End = new HUD_icon(pContent, this, 7);
+                    Start.Scale = new Vector2(2.4f, 1.5f);
+                    End.Scale = new Vector2(2.4f, 1.5f);
+                    Start.Position = new Vector2(0, 0 + Start.Texture.Height);
+                    End.Position = new Vector2(0, screenSize.Y - (End.Texture.Height*2));
+
+                    hud.Add(Start);
+                    hud.Add(End);
+
+                    break;
+                case 2:
+                    SSV = new SSV_HollowBack(pContent, this);
+                    cone = new Targeting(pContent, this);
+
+                    ladar = new Ladar(pContent, this);
+            
+                    hud = new List<HUD_icon>();
+
+                    //creating sidebars
+
+                    //Left ones
+                    HUD_icon BellowHud = new HUD_icon(pContent,this,0);
+                    float yHeight = screenSize.Y / BellowHud.Texture.Height;
+                    int intYHeight = (int)yHeight;
+                    Vector2 position = Vector2.Zero;
+
+                    float Per = yHeight-intYHeight;
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        BellowHud = new HUD_icon(pContent,this,i);
+                        BellowHud.Position =new Vector2(0,((i+1)*(Per * BellowHud.Texture.Height) + (i*BellowHud.Texture.Height)));
+                        hud.Add(BellowHud);
+                    }
+
+                    //Right ones
+                    R_hud = new List<Right_HUD>();
+            
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Right_HUD argh = new Right_HUD(pContent, this, i);
+                        R_hud.Add(argh);
+                    }
+            break;
+        }
+
         }
     }
 }

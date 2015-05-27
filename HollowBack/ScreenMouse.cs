@@ -53,14 +53,26 @@ namespace HollowBack
 
             light = false;
 
-            //Testing if the mouse is worthy of bearing the mighty variable known as "light"
-            foreach(Sprite hud in scene.HUD)
+            switch(scene.Game_State)
             {
-                if(( x > hud.Position.X && x < (hud.Position.X + hud.Texture.Width) && y > hud.Position.Y && y < (hud.Position.Y + hud.Texture.Height)) || scene.Cone.Lockin)
-                {
-                    light = true;
-                }
-            }
+                case 1:
+                    foreach(HUD_icon hud in scene.HUD)
+                        if (x > hud.Position.X && x < (hud.Position.X + (hud.Texture.Width* hud.Scale.X)) && y > hud.Position.Y && y < (hud.Position.Y + (hud.Texture.Height * hud.Scale.Y)))
+                        { light = true; }
+
+                    break;
+                case 2:
+                    //Testing if the mouse is worthy of bearing the mighty variable known as "light"
+                    foreach(Sprite hud in scene.HUD)
+                    {
+                        if(( x > hud.Position.X && x < (hud.Position.X + hud.Texture.Width) && y > hud.Position.Y && y < (hud.Position.Y + hud.Texture.Height)) || scene.Cone.Lockin)
+                        {
+                            light = true;
+                        }
+                    }
+                    break;
+
+        }
             
             //Making that red circle flow
             if (light)

@@ -100,9 +100,18 @@ namespace HollowBack
             else lighty = false;
 
 
-
             if (lighty) this.Texture = Lighty;
             else this.Texture = original;
+
+            //Changing GameState so it works with diferent scenes
+            if (funcKey == Keys.Enter && Click)
+            {
+                this.scene.Game_State = 2;
+            }
+            else if (funcKey == Keys.Escape && Click)
+            {
+                this.scene.Game_State = 0; 
+            }
 
             base.Update(pGameTime);
 
@@ -149,8 +158,12 @@ namespace HollowBack
                     FuncKey = Keys.D6;
                     break;
                 case (6):
+                    this.function = "Start";
+                    FuncKey = Keys.Enter;
                     break;
                 case (7):
+                    this.function = "End";
+                    FuncKey = Keys.Escape;
                     break;
             }
         }
@@ -158,7 +171,7 @@ namespace HollowBack
         private bool OnTop(Vector2 Position)
         {
             //Avaluating if the mouse is on top of this icon
-            if (this.Position.X < Position.X && this.Position.X + this.Texture.Width> Position.X && this.Position.Y < Position.Y && this.Position.Y + this.Texture.Height > Position.Y)
+            if (this.Position.X < Position.X && this.Position.X + (this.Texture.Width * this.Scale.X)> Position.X && this.Position.Y < Position.Y && this.Position.Y + (this.Texture.Height* this.Scale.Y) > Position.Y)
             {
                 return true;
             }

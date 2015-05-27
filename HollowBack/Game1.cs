@@ -27,6 +27,8 @@ namespace HollowBack
         Fighter Fig1;
         GameState State;
         GameState Previous;
+        int sendState;
+        int C_State;
      
 
         public Game1()
@@ -38,9 +40,8 @@ namespace HollowBack
             graphics.PreferredBackBufferWidth = ScreenSize.X;
             graphics.PreferredBackBufferHeight = ScreenSize.Y;
             IsMouseVisible = false;
-            State = GameState.Gameplay;
+            State = GameState.Start;
             Previous = State;
-            
         }
 
         protected override void Initialize()
@@ -51,7 +52,44 @@ namespace HollowBack
         protected override void LoadContent()
         {            
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            int sendState;
+
+            SwitchState();
+
+            game = new Scene(sendState,spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y), GraphicsDevice, Content);
+        }
+
+        protected override void UnloadContent()
+        {
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
+
+            this.C_State = game.Update(sendState, gameTime, Content);
+
+            Update_States(gameTime);
+
+            Previous = State;
+
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin();
+            game.Draw(spriteBatch);
+            spriteBatch.End();
+
+            base.Draw(gameTime);
+        }
+
+
+        private void SwitchState()
+        {
             switch (State)
             {
                 case GameState.Start:
@@ -67,59 +105,43 @@ namespace HollowBack
                     sendState = 0;
                     break;
             }
-            game = new Scene(sendState,spriteBatch, new Vector2(ScreenSize.X, ScreenSize.Y), GraphicsDevice, Content);
-            game.MakeHUD(Content);
         }
-
-        protected override void UnloadContent()
+        private void SwitchIntState()
         {
+            switch (this.sendState)
+            {
+                case 1:
+                    this.State = GameState.Start;
+                    break;
+                case 2:
+                    this.State = GameState.Gameplay;
+                    break;
+                case 3:
+                    this.State = GameState.Gameover;
+                    break;
+                default:
+                    Exit();
+                    break;
+            }
         }
-
-        protected override void Update(GameTime gameTime)
+        private void Update_States(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+
+            if (this.sendState != C_State)
+            {
+                this.sendState = C_State;
+                SwitchIntState();
+            }
+
             if (State != Previous)
             {
-                switch (Previous)
-                {
-                    //We are gonna unload objects here, when we are transitioning from one state to the other.
-                    case(GameState.Gameplay):
-                        
-                        break;
-                    case(GameState.Gameover):
-                        break;
-                    case (GameState.Start):
-                        break;
-                }
-            }
-            else
-            {
-                if (State == GameState.Start)
-                {
- 
-                }
-                else if (State == GameState.Gameplay)
-                {
-                    game.Update(gameTime, Content);
-                }
-                else if (State == GameState.Gameover)
-                { }
+                //cleaning the previous
+                game.UnloadContent();
+                //making the new one
+                game = new Scene(sendState, spriteBatch, new Vector2(ScreenSize.X,ScreenSize.Y),GraphicsDevice, Content);
+                game.Update(sendState, gameTime, Content);
             }
 
-            Previous = State;
-            base.Update(gameTime);
-        }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.Black);
-
-            spriteBatch.Begin();
-            game.Draw(spriteBatch);
-            spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }
