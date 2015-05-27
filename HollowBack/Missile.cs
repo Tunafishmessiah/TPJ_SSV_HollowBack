@@ -17,6 +17,7 @@ namespace HollowBack
             IsActive = false;
 
             ID = pID;
+            Health = 10;
 
             MaxSpeed = 2f;
             Accelaration = 0.2f;
@@ -31,6 +32,28 @@ namespace HollowBack
         public void Update(Vector2 pTarget)
         {
             UpdateMovement(pTarget);
+        }
+
+        public override void TakeDamage(int pDmgType)
+        {
+            switch (pDmgType)
+            {
+                case 0: // Laser
+                    Health -= 10;
+                    break;
+                case 1: // Missil
+                    Health -= 5;
+                    break;
+                case 2: // Railgun
+                    Health -= 2;
+                    break;
+                case 3: // Particle Cannon
+                    Health -= 1;
+                    break;
+                case 4: // EMP
+                    IsMoving = false;
+                    break;
+            }
         }
     }
 }

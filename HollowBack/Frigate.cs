@@ -18,6 +18,7 @@ namespace HollowBack
 
             ID = new Point(2, pID);
             WeaponSys = new Weapon(10, 10); // Set the weapon systems
+            Health = 10;
 
             MaxSpeed = 0.7f;
             Accelaration = 0.1f;
@@ -26,6 +27,28 @@ namespace HollowBack
         public void Update()
         {
             UpdateMovement(100);
+        }
+
+        public override void TakeDamage(int pDmgType)
+        {
+            switch (pDmgType)
+            {
+                case 0: // Laser
+                    Health -= 1;
+                    break;
+                case 1: // Missile
+                    Health -= 5;
+                    break;
+                case 2: // Railgun
+                    Health -= 10;
+                    break;
+                case 3: // Particle Cannon
+                    Health -= 2;
+                    break;
+                case 4: // EMP
+                    IsMoving = false;
+                    break;
+            }
         }
     }
 }

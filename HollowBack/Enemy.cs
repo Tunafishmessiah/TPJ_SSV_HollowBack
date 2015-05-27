@@ -24,6 +24,7 @@ namespace HollowBack
         private Point id; // The ships ID
         private Weapon weaponSys; // Weapon Systems
         private int range; // Firing range
+        private int health; // Ships health.
 
         #endregion
 
@@ -94,6 +95,13 @@ namespace HollowBack
             get { return range; }
             set { range = value; }
         }
+
+        public int Health
+        {
+            get { return health; }
+            set { health = value; }
+        }
+
         #endregion
 
         public Enemy(ContentManager pContent, string pAsset, Scene scene) : base(pContent, pAsset, scene)
@@ -166,6 +174,10 @@ namespace HollowBack
             this.Target = pTarget;
         }
 
+        public virtual void TakeDamage(int pDmgType)
+        {
+
+        }
 
         public void Engage()
         {
