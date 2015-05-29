@@ -364,11 +364,28 @@ namespace HollowBack
             SSV.Update(pGameTime);
             cone.Update(pGameTime);
 
+            //Enemies Update
             foreach (Fighter Enemies in EnemyFighter)
             {
-                Enemies.Update();
+                Enemies.Update(pGameTime);
                 Enemies.UpdatePositionAngle(cone);
             }
+            foreach (Frigate Enemies in EnemyFrigate)
+            {
+                Enemies.Update(pGameTime);
+                Enemies.UpdatePositionAngle(cone);
+            }
+            foreach (Carrier Enemies in EnemyCarrier)
+            {
+                Enemies.Update(pGameTime);
+                Enemies.UpdatePositionAngle(cone);
+            }
+            foreach (Dreadnought Enemies in EnemyDreadnought)
+            {
+                Enemies.Update(pGameTime);
+                Enemies.UpdatePositionAngle(cone);
+            }
+            //endEnemies Update
 
             ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
 
@@ -378,13 +395,11 @@ namespace HollowBack
                 SpawnBlock = 0;
             }
             else SpawnBlock += 1;
-
-            foreach (Fighter var1 in EnemyFighter) var1.UpdatePositionAngle(cone);
         }
 
         private void Gameplay_Draw(SpriteBatch pSpriteBatch)
         {
-            foreach (Enemy var1 in EnemyFighter) if (var1.IsVisible) var1.Draw(SpriteBatch);
+            foreach (Enemy var1 in EnemyFighter) var1.Draw(SpriteBatch);
             cone.Draw(spriteBatch);
             SSV.Draw(SpriteBatch);
             ladar.Draw(spriteBatch);

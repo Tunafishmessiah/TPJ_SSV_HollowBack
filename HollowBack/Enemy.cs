@@ -25,7 +25,8 @@ namespace HollowBack
         private Weapon weaponSys; // Weapon Systems
         private int range; // Firing range
         private int health; // Ships health.
-
+        private Texture2D original,lighted;//trades between selected and not selected
+        private bool selected;//see if the ship has been selected
         #endregion
 
         #region Properties
@@ -102,22 +103,47 @@ namespace HollowBack
             set { health = value; }
         }
 
+        public Texture2D Original
+        {
+            get { return original; }
+            set { original = value; }
+        }
+
+        public Texture2D s_texture
+        {
+            get { return lighted; }
+            set { lighted = value; }
+        }
+
+        public bool isSelected
+        { 
+            get { return selected; }
+            set { selected = value; }
+        }
         #endregion
 
         public Enemy(ContentManager pContent, string pAsset, Scene scene) : base(pContent, pAsset, scene)
         {
+            original = pContent.Load<Texture2D>(pAsset);
             IsUnknown = true;
-            IsVisible = false;
+            IsVisible = true;
             IsActive = false;
+            selected = false;
         }
 
+        public virtual void Update()
+        {
+            //UpdatePositionAngle(cone);
 
+            Update_Selection();
+
+            Update_Texture();
+        }
         public void SpawnAt(Vector2 pPosition)
         {
             this.Position = pPosition;
             IsActive = true;
         }
-
 
         public void UpdatePositionAngle(Targeting cone)
         {
@@ -158,9 +184,31 @@ namespace HollowBack
             if (Vector2.Distance(Position, Destination) <= range) IsMoving = false;
         }
 
-        public void Update(Targeting cone)
+        public void Update_Texture()
         {
-            UpdatePositionAngle(cone);
+            //This is were the texture will be changed
+            //when the ship is selected
+            if (isSelected)
+            {
+                if (s_texture != null)
+                {
+                    this.Texture = s_texture;
+                }
+            }
+        }
+
+        public void Update_Selection()
+        {
+            Point mPosition = this.scene.Mstate.Position;
+            //Avaluating if the mouse is on top of this icon
+            if(this.Position.X< mPosition.X &&
+                this.Position.X + this.Texture.Width > mPosition.X &&
+                this.Position.Y < mPosition.Y &&
+                this.Position.Y + this.Texture.Height > mPosition.Y)
+            {
+                if(this.scene.Mstate.LeftButton == ButtonState.Pressed)
+                isSelected = true;
+            }
         }
 
         public void SetDestination(Vector2 pDestination)
@@ -168,7 +216,6 @@ namespace HollowBack
             Direction = Vector2.Normalize(pDestination - Position);
             IsMoving = true;
         }
-
 
         public void SetTarget(Vector2 pTarget)
         {

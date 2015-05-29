@@ -34,14 +34,14 @@ namespace HollowBack
             this.scene = cene;
             Function = func;
             Moves = new List<string>();
-            //Loading stuff that is gonna be needed further ahead
 
+            //Loading stuff that is gonna be needed further ahead
             Font = pContent.Load<SpriteFont>("RadioLand");
 
             if (func == 2)
             {
                 Original = pContent.Load<Texture2D>("SideRight2");
-                Scale = new Vector2(1.18f, 1.5f);
+                Scale = new Vector2(1.35f, 1.5f);
             }
 
             else
@@ -59,7 +59,7 @@ namespace HollowBack
         {
             if (!st)
             {
-                if (Function != 2) this.Position = new Vector2(this.Position.X +15, this.Position.Y);
+                this.Position = new Vector2(this.Position.X +15, this.Position.Y);
                 this.Texture = original;
                 this.TangleUpdate();
                 st = true;
@@ -196,8 +196,7 @@ namespace HollowBack
 
         public void Draw_Image() { }
 
-        public void Update_Descript()
-        { }
+        public void Update_Descript() { }
 
         public void Draw_Descript() { }
     }
