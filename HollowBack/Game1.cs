@@ -24,7 +24,6 @@ namespace HollowBack
         SpriteBatch spriteBatch;
         Point ScreenSize;
         Scene game;
-        Fighter Fig1;
         GameState State;
         GameState Previous;
         int sendState;
@@ -64,9 +63,6 @@ namespace HollowBack
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             this.C_State = game.Update(sendState, gameTime, Content);
 
             Update_States(gameTime);
@@ -110,6 +106,9 @@ namespace HollowBack
         {
             switch (this.sendState)
             {
+                case 0:
+                    Exit();
+                    break;
                 case 1:
                     this.State = GameState.Start;
                     break;

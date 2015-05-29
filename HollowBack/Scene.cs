@@ -31,8 +31,9 @@ namespace HollowBack
         private Ladar ladar;
         private Vector2 screenSize;
         private GraphicsDevice graphics;
-        int SpawnBlock = 0;
-
+        private int SpawnBlock = 0;
+        private bool pause = false;
+        private Point Pause;
         //Start
         private HUD_icon Start, End;
 
@@ -191,15 +192,15 @@ namespace HollowBack
             switch (GAMESTATE)
             {
                 case 1:
-                    Start_Update(GameState, pGameTime, Content);
+                    Start_Update(GAMESTATE, pGameTime, Content);
                     break;
 
                 case 2:
-                    Gameplay_Update(GameState,pGameTime,Content);
+                    Gameplay_Update(GAMESTATE,pGameTime,Content);
                     break;
 
                 case 3:
-                    End_Update(GameState, pGameTime, Content);
+                    End_Update(GAMESTATE, pGameTime, Content);
                     break;
             }
 
@@ -357,44 +358,63 @@ namespace HollowBack
 
         private void Gameplay_Update(int GameState, GameTime pGameTime, ContentManager Content)
         {
-            foreach (Enemy var1 in enemyFighter) var1.Update(pGameTime);
-            foreach (Sprite HUD in hud) HUD.Update(pGameTime);
-            foreach (Right_HUD R_H in R_hud) R_H.Update(pGameTime);
+            if (keyboard != previousKeyboard && keyboard.IsKeyDown(Keys.Escape) && pause)
+            { this.Game_State = 0; }
 
-            SSV.Update(pGameTime);
-            cone.Update(pGameTime);
+            if (keyboard.IsKeyDown(Keys.Escape))
+            { 
+                pause = true;
+                this.Pause = mstate.Position;
+            }
+            
 
-            //Enemies Update
-            foreach (Fighter Enemies in EnemyFighter)
-            {
-                Enemies.Update(pGameTime);
-                Enemies.UpdatePositionAngle(cone);
+            if (keyboard != previousKeyboard && keyboard.IsKeyDown(Keys.Enter) && pause)
+            { 
+                pause = false;
+                Mouse.SetPosition(Pause.X,Pause.Y);
             }
-            foreach (Frigate Enemies in EnemyFrigate)
-            {
-                Enemies.Update(pGameTime);
-                Enemies.UpdatePositionAngle(cone);
-            }
-            foreach (Carrier Enemies in EnemyCarrier)
-            {
-                Enemies.Update(pGameTime);
-                Enemies.UpdatePositionAngle(cone);
-            }
-            foreach (Dreadnought Enemies in EnemyDreadnought)
-            {
-                Enemies.Update(pGameTime);
-                Enemies.UpdatePositionAngle(cone);
-            }
-            //endEnemies Update
 
-            ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
-
-            if (SpawnBlock == 50)
+            if (!pause)
             {
-                SpawnEnemy(Content);
-                SpawnBlock = 0;
+                foreach (Enemy var1 in enemyFighter) var1.Update(pGameTime);
+                foreach (Sprite HUD in hud) HUD.Update(pGameTime);
+                foreach (Right_HUD R_H in R_hud) R_H.Update(pGameTime);
+
+                SSV.Update(pGameTime);
+                cone.Update(pGameTime);
+
+                //Enemies Update
+                foreach (Fighter Enemies in EnemyFighter)
+                {
+                    Enemies.Update(pGameTime);
+                    Enemies.UpdatePositionAngle(cone);
+                }
+                foreach (Frigate Enemies in EnemyFrigate)
+                {
+                    Enemies.Update(pGameTime);
+                    Enemies.UpdatePositionAngle(cone);
+                }
+                foreach (Carrier Enemies in EnemyCarrier)
+                {
+                    Enemies.Update(pGameTime);
+                    Enemies.UpdatePositionAngle(cone);
+                }
+                foreach (Dreadnought Enemies in EnemyDreadnought)
+                {
+                    Enemies.Update(pGameTime);
+                    Enemies.UpdatePositionAngle(cone);
+                }
+                //endEnemies Update
+
+                ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
+
+                if (SpawnBlock == 50)
+                {
+                    SpawnEnemy(Content);
+                    SpawnBlock = 0;
+                }
+                else SpawnBlock += 1;
             }
-            else SpawnBlock += 1;
         }
 
         private void Gameplay_Draw(SpriteBatch pSpriteBatch)
@@ -404,7 +424,15 @@ namespace HollowBack
             SSV.Draw(SpriteBatch);
             ladar.Draw(spriteBatch);
             foreach (Sprite HUD in hud) HUD.Draw(SpriteBatch);
-            foreach (Right_HUD R_H in R_hud) R_H.Draw(SpriteBatch); 
+            foreach (Right_HUD R_H in R_hud) R_H.Draw(SpriteBatch);
+            if (pause)
+            {
+                pSpriteBatch.DrawString(R_hud[2].Font,
+                    "Press ESC again to quit\nPress Enter to continue",
+                    new Vector2((this.screenSize.X/2)-(R_hud[2].Font.MeasureString("Press ESC again to quit\nPress Enter to continue").X / 2),
+                        (this.screenSize.Y/2)-(R_hud[2].Font.MeasureString("Press ESC again to quit\nPress Enter to continue").Y * 2)),
+                    Color.White);
+            }
         }
 #endregion
 

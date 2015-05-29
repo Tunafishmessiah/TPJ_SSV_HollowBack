@@ -133,8 +133,6 @@ namespace HollowBack
 
         public virtual void Update()
         {
-            //UpdatePositionAngle(cone);
-
             Update_Selection();
 
             Update_Texture();

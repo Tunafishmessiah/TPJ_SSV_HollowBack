@@ -13,7 +13,6 @@ namespace HollowBack
     {
         private SpriteFont font;
         private Texture2D original;
-        private HUD_icon hud_Funcs;
         private int Function;
         private bool st;
         private List <string> Moves;
@@ -122,7 +121,6 @@ namespace HollowBack
 
         public void Update_History()
         {
-            bool press = false;
             foreach (HUD_icon icon in scene.HUD)
             {
                 if (icon.click && !icon.PreClick)
@@ -135,7 +133,6 @@ namespace HollowBack
                     {
                         Moves.Add("->Selected \n " + icon.Function);
                     }
-                    press = true;
                 }
             }
 
