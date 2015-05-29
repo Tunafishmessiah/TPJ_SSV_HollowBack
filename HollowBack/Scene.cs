@@ -445,7 +445,6 @@ namespace HollowBack
         { }
         #endregion
 
-
         public void MakeHUD( ContentManager pContent)
         {
             switch(Game_State)
@@ -499,6 +498,26 @@ namespace HollowBack
             break;
         }
 
+        }
+
+        public void Deselect()
+        {
+            foreach (Fighter Enemies in EnemyFighter)
+            {
+                Enemies.isSelected = false;
+            }
+            foreach (Frigate Enemies in EnemyFrigate)
+            {
+                Enemies.isSelected = false;
+            }
+            foreach (Carrier Enemies in EnemyCarrier)
+            {
+                Enemies.isSelected = false;
+            }
+            foreach (Dreadnought Enemies in EnemyDreadnought)
+            {
+                Enemies.isSelected = false;
+            }
         }
     }
 }

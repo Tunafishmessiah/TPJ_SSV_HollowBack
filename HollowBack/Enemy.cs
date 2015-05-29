@@ -193,6 +193,10 @@ namespace HollowBack
                     this.Texture = s_texture;
                 }
             }
+            else
+            {
+                this.Texture = original;
+            }
         }
 
         public void Update_Selection()
@@ -204,8 +208,11 @@ namespace HollowBack
                 this.Position.Y < mPosition.Y &&
                 this.Position.Y + this.Texture.Height > mPosition.Y)
             {
-                if(this.scene.Mstate.LeftButton == ButtonState.Pressed)
-                isSelected = true;
+                if (this.scene.Mstate.LeftButton == ButtonState.Pressed)
+                {
+                    this.scene.Deselect();
+                    isSelected = true;
+                }
             }
         }
 
