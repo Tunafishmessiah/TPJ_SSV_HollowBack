@@ -21,7 +21,8 @@ namespace HollowBack
         private float maxSpeed; // Maximum flight speed.
         private float accelaration; // Rate at which the ship accelarates.
         private Vector2 target; // Position of the target.
-        private Point id; // The ships ID
+        private Point id; // The ships ID.
+        private Point targetID; // The target's ID.
         private Weapon weaponSys; // Weapon Systems
         private int range; // Firing range
         private int health; // Ships health.
@@ -84,6 +85,12 @@ namespace HollowBack
         {
             get { return id; }
             protected set { id = value; }
+        }
+
+        public Point TargetID
+        {
+            get { return targetID; }
+            protected set { targetID = value; }
         }
 
         public Weapon WeaponSys
@@ -183,6 +190,16 @@ namespace HollowBack
             if (Vector2.Distance(Position, Destination) <= range) IsMoving = false;
         }
 
+        public void UpdateWeapons()
+        {
+            WeaponSys.Update(Position, Target);
+            if (WeaponSys.CanFire)
+            {
+                FireWeapon = true;
+                WeaponSys.FireWeapon();
+            }
+        }
+
         public void Update_Texture()
         {
             //This is were the texture will be changed
@@ -224,6 +241,7 @@ namespace HollowBack
 
         public void SetDestination(Vector2 pDestination)
         {
+            Destination = pDestination;
             Direction = Vector2.Normalize(pDestination - Position);
             IsMoving = true;
         }

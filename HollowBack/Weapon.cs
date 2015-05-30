@@ -59,10 +59,11 @@ namespace HollowBack
 
         #endregion
 
-        public Weapon(float pCooldownTime, float pRepairTime)
+        public Weapon(float pCooldownTime, float pRepairTime, float pRange)
         {
             CooldownTime = pCooldownTime;
             RepairTime = pRepairTime;
+            Range = pRange;
         }
 
         public void FireWeapon()

@@ -17,6 +17,7 @@ namespace HollowBack
         private ScreenMouse little;
         private MouseState mstate, previousMstate;
         private KeyboardState keyboard, previousKeyboard;
+        private ContentManager content;
         //Gameplay
         private int GAMESTATE;
         private SpriteBatch spriteBatch;
@@ -24,6 +25,9 @@ namespace HollowBack
         private List<Frigate> enemyFrigate;
         private List<Carrier> enemyCarrier;
         private List<Dreadnought> enemyDreadnought;
+        private List<Missile> enemyMissile;
+        private List<Slug> enemySlug;
+        //private List<PtCannon> enemyCannon;
         private List<HUD_icon> hud;
         private List<Right_HUD> R_hud;
         private SSV_HollowBack SSV;
@@ -52,6 +56,12 @@ namespace HollowBack
             set { spriteBatch = value; }
         }
 
+        public ContentManager Content
+        {
+            get { return content; }
+            set { content = value; }
+        }
+
         public List<Fighter> EnemyFighter
         {
             get { return enemyFighter; }
@@ -75,6 +85,24 @@ namespace HollowBack
             get { return enemyDreadnought; }
             private set { enemyDreadnought = value; }
         }
+
+        public List<Missile> EnemyMissile
+        {
+            get { return enemyMissile; }
+            private set { enemyMissile = value; }
+        }
+
+        public List<Slug> EnemySlug
+        {
+            get { return enemySlug; }
+            private set { enemySlug = value; }
+        }
+
+        //public List<PtCannon> EnemyCannon
+        //{
+        //    get { return enemyCannon; }
+        //    private set { enemyCannon = value; }
+        //}
 
         public List<Right_HUD> R_HUD
         {
@@ -137,7 +165,7 @@ namespace HollowBack
         }
         #endregion
 
-        public Scene(int GameState,SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph, ContentManager Content)
+        public Scene(int GameState,SpriteBatch pSpriteBatch, Vector2 screenDimensions, GraphicsDevice Graph, ContentManager pContent)
         {
             GAMESTATE = GameState;
 
@@ -145,6 +173,7 @@ namespace HollowBack
             //Loading "master" variables
             this.spriteBatch = pSpriteBatch;
             this.screenSize = screenDimensions;
+            this.Content = pContent;
 
             //This variable were made so that we can save some processing time, we can acess it
             //from any variable that's called here, so we don't need to call them in almost every single thing we have on screen
@@ -238,6 +267,22 @@ namespace HollowBack
             Sprite var = new Sprite(pContent, pAssetName,this);
         }
 
+        public Vector2 GetPositionByID(Point pID)
+        {
+            switch (pID.X)
+            {
+                case 1:
+                    return EnemyFighter[pID.Y].Position;
+                case 2:
+                    return EnemyFrigate[pID.Y].Position;
+                case 3:
+                    return EnemyCarrier[pID.Y].Position;
+                case 4:
+                    return EnemyDreadnought[pID.Y].Position;
+                default:
+                    return new Vector2(640, 360);
+            }
+        }
 
         #region Add Enemy
 
@@ -355,6 +400,8 @@ namespace HollowBack
             EnemyFrigate = new List<Frigate>();
             EnemyCarrier = new List<Carrier>();
             EnemyDreadnought = new List<Dreadnought>();
+            EnemyMissile = new List<Missile>();
+            EnemySlug = new List<Slug>();
         }
 
         private void Gameplay_Update(int GameState, GameTime pGameTime, ContentManager Content)
@@ -389,23 +436,72 @@ namespace HollowBack
                 {
                     Enemies.Update(pGameTime);
                     Enemies.UpdatePositionAngle(cone);
+                    if (Enemies.FireWeapon)
+                    {
+                        int i = 0;
+                        if (EnemyMissile.Count != 0) while (i < EnemyMissile.Count && EnemyMissile[i] != null) i++;
+                        Missile var = new Missile(content, this, i, new Point(0,0));
+                        EnemyMissile.Insert(i, var);
+                        EnemyMissile[i].SpawnAt(Enemies.Position);
+                        EnemyMissile[i].SetDestination(new Vector2(640, 360));
+                        Enemies.FireWeapon = false;
+                    }
                 }
                 foreach (Frigate Enemies in EnemyFrigate)
                 {
                     Enemies.Update(pGameTime);
                     Enemies.UpdatePositionAngle(cone);
+                    if (Enemies.FireWeapon)
+                    {
+                        int i = 0;
+                        if (EnemySlug.Count != 0) while (i < EnemySlug.Count && EnemySlug[i] != null) i++;
+                        Slug var = new Slug(content, this);
+                        EnemySlug.Insert(i, var);
+                        EnemySlug[i].SpawnAt(Enemies.Position);
+                        EnemySlug[i].SetDestination(new Vector2(640, 360));
+                        Enemies.FireWeapon = false;
+                    }
                 }
                 foreach (Carrier Enemies in EnemyCarrier)
                 {
                     Enemies.Update(pGameTime);
                     Enemies.UpdatePositionAngle(cone);
+                    if (Enemies.FireWeapon)
+                    {
+                        AddFigther(content, Enemies.Position, new Vector2(640, 360));
+                        Enemies.FireWeapon = false;
+                        //int i = 0;
+                        //if (EnemyFighter.Count != 0) while (i < EnemyFighter.Count && EnemyFighter[i] != null) i++;
+                        //Fighter var = new Fighter(content, this, i);
+                        //EnemyFighter.Insert(i, var);
+                    }
                 }
                 foreach (Dreadnought Enemies in EnemyDreadnought)
                 {
                     Enemies.Update(pGameTime);
                     Enemies.UpdatePositionAngle(cone);
+                    //if (Enemies.FireWeapon)
+                    //{
+                    //    int i = 0;
+                    //    if (EnemySlug.Count != 0) while (i < EnemySlug.Count && EnemySlug[i] != null) i++;
+                    //    Slug var = new Slug(content, this);
+                    //    EnemySlug.Insert(i, var);
+                    //}
                 }
                 //endEnemies Update
+
+                //Weapons Update
+
+                foreach (Missile Missile in EnemyMissile)
+                {
+                    Missile.Update(GetPositionByID(Missile.TargetID));
+                }
+                foreach (Slug Slug in EnemySlug)
+                {
+                    Slug.Update();
+                }
+
+                //endWeapons Update
 
                 ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
 
@@ -420,7 +516,12 @@ namespace HollowBack
 
         private void Gameplay_Draw(SpriteBatch pSpriteBatch)
         {
-            foreach (Enemy var1 in EnemyFighter) var1.Draw(SpriteBatch);
+            foreach (Fighter var1 in EnemyFighter) var1.Draw(SpriteBatch);
+            foreach (Frigate var1 in EnemyFrigate) var1.Draw(SpriteBatch);
+            foreach (Carrier var1 in EnemyCarrier) var1.Draw(SpriteBatch);
+            foreach (Dreadnought var1 in EnemyDreadnought) var1.Draw(SpriteBatch);
+            foreach (Missile var1 in EnemyMissile) var1.Draw(SpriteBatch);
+            foreach (Slug var1 in EnemySlug) var1.Draw(SpriteBatch);
             cone.Draw(spriteBatch);
             SSV.Draw(SpriteBatch);
             ladar.Draw(spriteBatch);

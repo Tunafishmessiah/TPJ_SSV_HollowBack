@@ -16,7 +16,7 @@ namespace HollowBack
         {
 
             ID = new Point(2, pID);
-            WeaponSys = new Weapon(10, 10); // Set the weapon systems
+            WeaponSys = new Weapon(10, 10, 300); // Set the weapon systems
             Health = 10;
 
             MaxSpeed = 0.5f;
@@ -27,7 +27,8 @@ namespace HollowBack
 
         public override void Update(GameTime pGameTime)
         {
-            UpdateMovement(100);
+            UpdateMovement(250);
+            UpdateWeapons();
             base.Update();
         }
 

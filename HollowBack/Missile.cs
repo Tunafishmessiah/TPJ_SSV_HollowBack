@@ -9,14 +9,15 @@ namespace HollowBack
 {
     class Missile : Enemy
     {
-        public Missile(ContentManager pContent, Scene pScene, Point pID)
+        public Missile(ContentManager pContent, Scene pScene, int pID, Point pTargetID)
             : base(pContent, "Hunter", pScene)
         {
             IsUnknown = false;
             IsVisible = true;
             IsActive = false;
 
-            ID = pID;
+            ID = new Point(5, pID);
+            TargetID = pTargetID;
             Health = 10;
 
             MaxSpeed = 2f;
