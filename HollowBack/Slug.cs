@@ -24,5 +24,10 @@ namespace HollowBack
 
             this.s_texture = pContent.Load<Texture2D>("HunterLight");
         }
+
+        public void Update()
+        {
+            UpdateMovement(0);
+        }
     }
 }
