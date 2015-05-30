@@ -99,12 +99,6 @@
     <Content Include="Content\FrigateSelected.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Hunter.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\HunterLight.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Ladar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -119,8 +113,6 @@
     <Content Include="Content\Radar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sem Título - Cópia.png" />
-    <Content Include="Content\Sem Título.png" />
     <Content Include="Content\SideBlocks.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
