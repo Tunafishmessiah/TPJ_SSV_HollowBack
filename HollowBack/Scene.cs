@@ -387,8 +387,7 @@ namespace HollowBack
         #endregion
 
 
-
-#region Start_Code
+        #region Start_Code
         private void Start_Load(int GameState, SpriteBatch pSpriteBatch, ContentManager Content)
         {
             MakeHUD(Content);
@@ -403,7 +402,8 @@ namespace HollowBack
         }
 #endregion
 
-#region Gameplay_Code
+
+        #region Gameplay_Code
         private void Gameplay_Load(int GameState, SpriteBatch pSpriteBatch,  ContentManager Content)
         {                    //Loading stuff and starting up some needed variables
             EnemyFighter = new List<Fighter>();
@@ -544,7 +544,8 @@ namespace HollowBack
         }
 #endregion
 
-#region End_Code
+
+        #region End_Code
         private void End_Load(int GameState, SpriteBatch pSpriteBatch, ContentManager Content)
         { }
         private void End_Update(int GameState, GameTime pGameTime, ContentManager Content)
@@ -552,6 +553,7 @@ namespace HollowBack
         private void End_Draw(SpriteBatch pSpriteBatch)
         { }
         #endregion
+
 
         public void MakeHUD( ContentManager pContent)
         {
@@ -626,6 +628,17 @@ namespace HollowBack
             {
                 Enemies.isSelected = false;
             }
+            foreach (Missile Enemies in enemyMissile)
+            {
+                Enemies.isSelected = false;
+            }
+            foreach (Slug Enemies in enemySlug)
+            {
+                Enemies.isSelected = false;
+            }
+        //    }
+        //private List<Missile> enemyMissile;
+        //private List<Slug> enemySlug;
         }
     }
 }

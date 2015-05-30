@@ -12,7 +12,7 @@ namespace HollowBack
     class Carrier : Enemy
     {
         public Carrier(ContentManager pContent, Scene scene, int pID)
-            : base(pContent, "Hunter", scene)
+            : base(pContent, "Carrier", scene)
         {
 
             ID = new Point(3, pID);
@@ -22,7 +22,9 @@ namespace HollowBack
             MaxSpeed = 0.3f;
             Accelaration = 0.3f;
 
-            this.s_texture = pContent.Load<Texture2D>("HunterLight");
+            this.Scale = new Vector2(0.5f, 0.5f);
+
+            this.s_texture = pContent.Load<Texture2D>("CarrierSelected");
         }
 
         public override void Update(GameTime pGameTime)
