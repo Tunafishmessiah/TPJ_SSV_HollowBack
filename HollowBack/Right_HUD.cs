@@ -259,6 +259,9 @@ namespace HollowBack
                 case 4:
                     stringMesureAndInsertion("Dreadnought");
                     break;
+                case 5:
+                    stringMesureAndInsertion("Missile");
+                    break;
                 default:
                     stringMesureAndInsertion("Badass");
                     break;
@@ -288,6 +291,10 @@ namespace HollowBack
                         case "Dreadnought":
                             enemyDescript = (enemyName + "\nBest weapon:\n-Particle\nCannon");
                             enemyDescript2 = (enemyName + "\nWorst weapon:\n-Laser");
+                            break;
+                        case "Missile":
+                            enemyDescript = (enemyName + "\nBest weapon:\n-Laser");
+                            enemyDescript2 = (enemyName + "\nWorst weapon:\n-Particle\nCannon");
                             break;
                         default:
                             break;

@@ -33,6 +33,7 @@ namespace HollowBack
         public void Update(Vector2 pTarget)
         {
             UpdateMovement(pTarget);
+            base.Update();
         }
 
         public override void TakeDamage(int pDmgType)
