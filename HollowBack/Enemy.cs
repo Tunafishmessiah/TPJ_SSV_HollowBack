@@ -25,6 +25,7 @@ namespace HollowBack
         private Weapon weaponSys; // Weapon Systems
         private int range; // Firing range
         private int health; // Ships health.
+        private int lastHealth;//To show the damage the ship has taken
         private Texture2D original,lighted;//trades between selected and not selected
         private bool selected;//see if the ship has been selected
         #endregion
@@ -208,9 +209,14 @@ namespace HollowBack
                 this.Position.Y < mPosition.Y &&
                 this.Position.Y + this.Texture.Height > mPosition.Y)
             {
-                if (this.scene.Mstate.LeftButton == ButtonState.Pressed)
+                if (this.scene.Mstate.LeftButton == ButtonState.Pressed &&
+                    !this.isSelected)
                 {
                     this.scene.Deselect();
+                    foreach (Right_HUD hud in this.scene.R_HUD)
+                    {
+                        hud.add_selected(this);
+                    }
                     isSelected = true;
                 }
             }

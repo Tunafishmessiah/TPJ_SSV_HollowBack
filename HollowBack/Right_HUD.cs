@@ -15,8 +15,16 @@ namespace HollowBack
         private Texture2D original;
         private int Function;
         private bool st;
+        //history
         private List <string> Moves;
+        //description
+        private string enemyDescript, enemyDescript2;
+        private bool write1;
+        private double change;
+        //image
+        private Texture2D s_enemy;
 
+        #region properties
         public SpriteFont Font
         {
             get { return font; }
@@ -53,6 +61,7 @@ namespace HollowBack
             HUD_Func(func);
 
         }
+        #endregion
 
         public override void Update(GameTime pGameTime)
         {
@@ -62,6 +71,8 @@ namespace HollowBack
                 this.Texture = original;
                 this.TangleUpdate();
                 st = true;
+                change = pGameTime.TotalGameTime.TotalSeconds;
+                write1 = true;
             }
 
             switch (Function)
@@ -70,7 +81,14 @@ namespace HollowBack
                     //Enemy Image
                     break;
                 case 1:
-                    //Enemy Data
+                    //Enemy Data  
+                    if (change + 1 < pGameTime.TotalGameTime.TotalSeconds)
+                    {
+                        change = pGameTime.TotalGameTime.TotalSeconds;
+                        if (write1) write1 = false;
+                        else write1 = true;
+                    }
+                    //Update_Description(pGameTime);
                     break;
                 case 2:
                     //Move History
@@ -86,9 +104,11 @@ namespace HollowBack
             switch (Function)
             {
                 case 0:
+                    Draw_Image(pSpriteBatch);
                     //Enemy Image
                     break;
                 case 1:
+                    Draw_Descript(pSpriteBatch);
                     //Enemy Data
                     break;
                 case 2:
@@ -136,20 +156,23 @@ namespace HollowBack
                 }
             }
 
+            delete_history();
+        }
+
+        public void delete_history()
+        {
             int length = 7;
 
-            if (Moves.Count > length )
+            if (Moves.Count > length)
             {
                 int i = 0;
-                for (; i < length && Moves[i+1] != null; i++)
+                for (; i < length && Moves[i + 1] != null; i++)
                 {
                     Moves[i] = Moves[i + 1];
                 }
 
                 Moves.RemoveAt(i);
             }
-
-
         }
 
         public void Draw_History(SpriteBatch pSpriteBatch)
@@ -188,13 +211,117 @@ namespace HollowBack
 
         }
 
-        public void Update_Image()
+        public void Draw_Image(SpriteBatch pSpriteBatch) 
+        {
+           if(s_enemy!= null)
+           {
+               pSpriteBatch.Draw(s_enemy,
+                   new Vector2((this.Position.X+ (this.Texture.Width*this.Scale.X)/2)-(s_enemy.Width/2),
+                       (this.Position.Y + (this.Texture.Height * this.Scale.Y) / 2) - (s_enemy.Height / 2))
+                   ,Color.White);
+           }
+
+        }
+
+        public void Draw_Descript(SpriteBatch pSpriteBatch)
+        {
+            if(enemyDescript != null)
+            {
+                if (write1)
+                {
+                    pSpriteBatch.DrawString(this.Font, enemyDescript, new Vector2(this.Position.X + 7, this.Position.Y + 3), Color.GreenYellow);
+                }
+                else {
+
+
+
+                    pSpriteBatch.DrawString(this.Font, enemyDescript2, new Vector2(this.Position.X + 7, this.Position.Y + 3), Color.GreenYellow);
+                }
+            }
+        }
+
+        public void Update_Description(GameTime pGameTime)
         { }
 
-        public void Draw_Image() { }
+        public void Update_Descript(Enemy enemy) 
+        {
+            switch (enemy.ID.X)
+            {
+                case 1:
+                    stringMesureAndInsertion("Fighter");
+                    break;
+                case 2:
+                    stringMesureAndInsertion("Frigate");
+                    break;
+                case 3:
+                    stringMesureAndInsertion("Carrier");
+                    break;
+                case 4:
+                    stringMesureAndInsertion("Dreadnought");
+                    break;
+                default:
+                    stringMesureAndInsertion("Badass");
+                    break;
+            }
+        }
 
-        public void Update_Descript() { }
+        public void stringMesureAndInsertion(string enemyName)
+        {
+            switch(Function)
+            {
+                case 1:
+                    //Adding the description here
+                    switch (enemyName)
+                    {
+                        case "Fighter":
+                            enemyDescript = (enemyName + "\nBest weapon:\n-Missil");
+                            enemyDescript2 = (enemyName + "\nWorst weapon:\n-Particle\nCannon");
+                            break;
+                        case "Frigate":
+                            enemyDescript = (enemyName + "\nBest weapon:\n-Slug");
+                            enemyDescript2 = (enemyName + "\nWorst weapon:\n-Laser");
+                            break;
+                        case "Carrier":
+                            enemyDescript = (enemyName + "\nBest weapon:\n-Particle\nCannon");
+                            enemyDescript2 = (enemyName + "\nWorst weapon:\n-Laser");
+                            break;
+                        case "Dreadnought":
+                            enemyDescript = (enemyName + "\nBest weapon:\n-Particle\nCannon");
+                            enemyDescript2 = (enemyName + "\nWorst weapon:\n-Laser");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
 
-        public void Draw_Descript() { }
+                case 2://adding the 
+                    if ((font.MeasureString("->Identified a " + enemyName + "").X + this.Position.X + 10) < this.scene.ScreenSize.X)
+                    {
+                        Moves.Add("->Identified a " + enemyName + "");
+                    }
+                    else
+                    {
+                        Moves.Add("->Identified a\n" + enemyName + "");
+                    }
+
+                    break;
+        }
+        }
+
+        public void add_selected(Enemy enemy)
+        {
+            switch(this.Function)
+            {
+                case 0://If it's the 1st on top
+                    this.s_enemy = enemy.Texture;
+                    break;
+                case 1://the second
+                    Update_Descript(enemy);
+                    break;
+                case 2://the last one
+                    Update_Descript(enemy);
+                    break;
+            }
+        }
     }
 }

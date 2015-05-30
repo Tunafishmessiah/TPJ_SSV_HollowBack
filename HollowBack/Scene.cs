@@ -184,6 +184,7 @@ namespace HollowBack
         {
             GAMESTATE = GameState;
 
+
             keyboard = Keyboard.GetState();
             mstate = Mouse.GetState();
 
