@@ -27,7 +27,7 @@ namespace HollowBack
 
         public void Update()
         {
-            UpdateMovement(0);
+            UpdateMovement(10);
         }
     }
 }

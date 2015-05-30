@@ -27,6 +27,7 @@ namespace HollowBack
         private List<Dreadnought> enemyDreadnought;
         private List<Missile> enemyMissile;
         private List<Slug> enemySlug;
+        private Point targetID;
         //private List<PtCannon> enemyCannon;
         private List<HUD_icon> hud;
         private List<Right_HUD> R_hud;
@@ -103,6 +104,12 @@ namespace HollowBack
         //    get { return enemyCannon; }
         //    private set { enemyCannon = value; }
         //}
+
+        public Point TargetID
+        {
+            get { return targetID; }
+            set { targetID = value; }
+        }
 
         public List<Right_HUD> R_HUD
         {
@@ -333,7 +340,7 @@ namespace HollowBack
         public void SpawnEnemy(ContentManager Content)
         {
             Random rnd = new Random();
-            int SelShip = rnd.Next(1, 5);
+            int SelShip = rnd.Next(1, 4);
             
             #region SpawnSelection
             int SpawnX = rnd.Next(-(int)(screenSize.X / 2), (int)screenSize.X + (int)(screenSize.X/2));
@@ -369,10 +376,9 @@ namespace HollowBack
 
             switch (SelShip)
             {
-                case 1: AddFigther(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
-                case 2: AddFrigate(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
-                case 3: AddCarrier(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
-                case 4: AddDreadnought(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
+                case 1: AddFrigate(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
+                case 2: AddCarrier(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
+                case 3: AddDreadnought(Content, new Vector2(SpawnX, SpawnY), new Vector2(DestX, DestY)); break;
             }
         }
 
@@ -474,10 +480,6 @@ namespace HollowBack
                     {
                         AddFigther(content, Enemies.Position, new Vector2(640, 360));
                         Enemies.FireWeapon = false;
-                        //int i = 0;
-                        //if (EnemyFighter.Count != 0) while (i < EnemyFighter.Count && EnemyFighter[i] != null) i++;
-                        //Fighter var = new Fighter(content, this, i);
-                        //EnemyFighter.Insert(i, var);
                     }
                 }
                 foreach (Dreadnought Enemies in EnemyDreadnought)
