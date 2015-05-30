@@ -294,6 +294,7 @@ namespace HollowBack
             EnemyFighter.Insert(i, var);
             EnemyFighter[i].SpawnAt(pPosition);
             EnemyFighter[i].SetDestination(pDestination);
+            EnemyFighter[i].SetTarget(new Vector2(640, 360));
         }
 
         public void AddFrigate(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
@@ -304,6 +305,7 @@ namespace HollowBack
             EnemyFrigate.Insert(i, var);
             EnemyFrigate[i].SpawnAt(pPosition);
             EnemyFrigate[i].SetDestination(pDestination);
+            EnemyFrigate[i].SetTarget(new Vector2(640, 360));
         }
 
         public void AddCarrier(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
@@ -314,6 +316,7 @@ namespace HollowBack
             EnemyCarrier.Insert(i, var);
             EnemyCarrier[i].SpawnAt(pPosition);
             EnemyCarrier[i].SetDestination(pDestination);
+            EnemyCarrier[i].SetTarget(new Vector2(640, 360));
         }
 
         public void AddDreadnought(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
@@ -324,6 +327,7 @@ namespace HollowBack
             EnemyDreadnought.Insert(i, var);
             EnemyDreadnought[i].SpawnAt(pPosition);
             EnemyDreadnought[i].SetDestination(pDestination);
+            EnemyDreadnought[i].SetTarget(new Vector2(640, 360));
         }
 
         public void SpawnEnemy(ContentManager Content)
