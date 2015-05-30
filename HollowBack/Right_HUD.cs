@@ -262,6 +262,9 @@ namespace HollowBack
                 case 5:
                     stringMesureAndInsertion("Missile");
                     break;
+                case 6:
+                    stringMesureAndInsertion("Slug");
+                    break;
                 default:
                     stringMesureAndInsertion("Badass");
                     break;
@@ -296,6 +299,10 @@ namespace HollowBack
                             enemyDescript = (enemyName + "\nBest weapon:\n-Laser");
                             enemyDescript2 = (enemyName + "\nWorst weapon:\n-Particle\nCannon");
                             break;
+                        case "Slug":
+                            enemyDescript = (enemyName + "\nBest weapon:\n-Laser");
+                            enemyDescript2 = (enemyName + "\nWorst weapon:\n-Particle\nCannon");
+                            break;
                         default:
                             break;
                     }
@@ -320,7 +327,7 @@ namespace HollowBack
             switch(this.Function)
             {
                 case 0://If it's the 1st on top
-                    this.s_enemy = enemy.Texture;
+                    this.s_enemy = enemy.Original;
                     break;
                 case 1://the second
                     Update_Descript(enemy);

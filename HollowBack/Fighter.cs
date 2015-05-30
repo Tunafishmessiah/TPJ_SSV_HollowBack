@@ -12,7 +12,7 @@ namespace HollowBack
     class Fighter : Enemy
     {
         public Fighter(ContentManager pContent, Scene scene, int pID)
-            : base(pContent, "Hunter", scene)
+            : base(pContent, "Fighter", scene)
         {
             ID = new Point(1, pID);
             WeaponSys = new Weapon(10, 10, 200); // Set the weapon systems
@@ -21,7 +21,9 @@ namespace HollowBack
             MaxSpeed = .7f;
             Accelaration = 0.3f;
 
-            this.s_texture = pContent.Load<Texture2D>("HunterLight");
+            this.Scale = new Vector2(0.5f, 0.5f);
+
+            this.s_texture = pContent.Load<Texture2D>("FighterSelected");
         }
 
         public override void Update(GameTime pGameTime)

@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 
 namespace HollowBack
 {
     class Missile : Enemy
     {
         public Missile(ContentManager pContent, Scene pScene, int pID, Point pTargetID)
-            : base(pContent, "Hunter", pScene)
+            : base(pContent, "Missile", pScene)
         {
             IsUnknown = false;
             IsVisible = true;
@@ -20,8 +23,11 @@ namespace HollowBack
             TargetID = pTargetID;
             Health = 10;
 
+            this.Scale = new Vector2(0.3f, 0.3f);
+
             MaxSpeed = 2f;
             Accelaration = 0.2f;
+            this.s_texture = pContent.Load<Texture2D>("MissileSelected");
         }
 
         public void UpdateMovement(Vector2 pTarget)
