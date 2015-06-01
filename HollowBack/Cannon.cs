@@ -40,10 +40,8 @@ namespace HollowBack
         #endregion
 
         public Cannon(ContentManager pContent, Scene pScene, Point pTarget, float pDuration)
-            : base(pContent, "Hunter", pScene)
+            : base(pContent, "Missile", pScene)
         {
-            IsActive = true;
-
             TargetID = pTarget;
             Duration = pDuration;
             Timer = 0;
@@ -53,6 +51,12 @@ namespace HollowBack
         {
             if (Timer < Duration) Timer++;
             else IsActive = false;
+        }
+
+        public void SpawnAt(Vector2 pPosition)
+        {
+            this.Position = pPosition;
+            IsActive = true;
         }
     }
 }

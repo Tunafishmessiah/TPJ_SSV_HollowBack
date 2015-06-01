@@ -33,6 +33,7 @@ namespace HollowBack
         private List<Missile> enemyMissileDump;
         private List<Slug> enemySlug;
         private List<Slug> enemySlugDump;
+        private List<Cannon> enemyCannon;
         private Point targetID;
         private int HB_hp;
         //private List<PtCannon> enemyCannon;
@@ -116,6 +117,12 @@ namespace HollowBack
         {
             get { return enemySlugDump; }
             private set { enemySlugDump = value; }
+        }
+
+        public List<Cannon> EnemyCannon
+        {
+            get { return enemyCannon; }
+            private set { enemyCannon = value; }
         }
 
         public int HB_HP
@@ -442,6 +449,7 @@ namespace HollowBack
             enemyMissileDump = new List<Missile>();
             EnemySlug = new List<Slug>();
             enemySlugDump = new List<Slug>();
+            EnemyCannon = new List<Cannon>();
             HB_hp = 100;
         }
 
@@ -517,13 +525,15 @@ namespace HollowBack
                 {
                     Enemies.Update(pGameTime);
                     Enemies.UpdatePositionAngle(cone);
-                    //if (Enemies.FireWeapon)
-                    //{
-                    //    int i = 0;
-                    //    if (EnemySlug.Count != 0) while (i < EnemySlug.Count && EnemySlug[i] != null) i++;
-                    //    Slug var = new Slug(content, this);
-                    //    EnemySlug.Insert(i, var);
-                    //}
+                    if (Enemies.FireWeapon)
+                    {
+                        int i = 0;
+                        if (EnemyCannon.Count != 0) while (i < EnemyCannon.Count && EnemyCannon[i] != null) i++;
+                        Cannon var = new Cannon(content, this, new Point(0,0), 10);
+                        EnemyCannon.Insert(i, var);
+                        EnemyCannon[i].SpawnAt(Enemies.Position);
+                        Enemies.FireWeapon = false;
+                    }
                 }
                 //endEnemies Update
 
@@ -559,6 +569,15 @@ namespace HollowBack
 
                 enemySlug = enemySlug.Except(enemySlugDump).ToList();
 
+                foreach (Cannon Cannon in EnemyCannon)
+                {
+                    Cannon.Update();
+
+                    //Add destroy here.
+                }
+
+                enemySlug = enemySlug.Except(enemySlugDump).ToList();
+
                 //endWeapons Update
 
                 ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
@@ -583,6 +602,7 @@ namespace HollowBack
                 if(var1.Destroy == false) var1.Draw(SpriteBatch);
             }
             foreach (Slug var1 in EnemySlug) var1.Draw(SpriteBatch);
+            foreach (Cannon var1 in EnemyCannon) if(var1.IsActive) var1.Draw(SpriteBatch);
             cone.Draw(spriteBatch);
             SSV.Draw(SpriteBatch);
             ladar.Draw(spriteBatch);
