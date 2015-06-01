@@ -25,10 +25,6 @@ namespace HollowBack
         private List<Frigate> enemyFrigate;
         private List<Carrier> enemyCarrier;
         private List<Dreadnought> enemyDreadnought;
-        //Countdown_Cannon
-        SpriteFont Font1;
-        Vector2 FontPos;
-        //
         private List<Missile> enemyMissile;
         private List<Missile> enemyMissileDump;
         private List<Slug> enemySlug;
@@ -94,6 +90,7 @@ namespace HollowBack
             get { return enemyDreadnought; }
             private set { enemyDreadnought = value; }
         }
+
 
         public List<Missile> EnemyMissile
         {
@@ -213,9 +210,7 @@ namespace HollowBack
             this.spriteBatch = pSpriteBatch;
             this.screenSize = screenDimensions;
             this.Content = pContent;
-
-            Font1 = pContent.Load<SpriteFont>("RadioLand");
-            FontPos = new Vector2(0, 0);   
+ 
 
             //This variable were made so that we can save some processing time, we can acess it
             //from any variable that's called here, so we don't need to call them in almost every single thing we have on screen
@@ -548,7 +543,7 @@ namespace HollowBack
                         Missile.Destroy = true;
                         enemyMissileDump.Add(Missile);
                         HB_hp -= 1;
-                        Console.WriteLine("HollowBack Health" + HB_hp);
+                        //Console.WriteLine("HollowBack Health" + HB_hp);
                     }
                 }
 
@@ -563,7 +558,7 @@ namespace HollowBack
                         Slug.Destroy = true;
                         enemySlugDump.Add(Slug);
                         HB_hp -= 5;
-                        Console.WriteLine("HollowBack Health" + HB_hp);
+                       // Console.WriteLine("HollowBack Health" + HB_hp);
                     }
                 }
 
@@ -588,6 +583,23 @@ namespace HollowBack
                     SpawnBlock = 0;
                 }
                 else SpawnBlock += 1;
+
+                //Dreadnought Countdown
+                foreach (Dreadnought Dreadnought in EnemyDreadnought)
+                {
+                    if (Dreadnought.IsMoving == false)
+                    {
+                        Dreadnought.cannonCountdown -= 1;
+                        //Console.WriteLine(Dreadnought.cannonCountdown);
+                    }
+
+                    if (Dreadnought.cannonCountdown == 0)
+                    {
+                        Dreadnought.cannonCountdown = 100;
+                    }
+                    
+                }
+                //end Dreadnought Countdown
             }
         }
 
@@ -596,11 +608,8 @@ namespace HollowBack
             foreach (Fighter var1 in EnemyFighter) var1.Draw(SpriteBatch);
             foreach (Frigate var1 in EnemyFrigate) var1.Draw(SpriteBatch);
             foreach (Carrier var1 in EnemyCarrier) var1.Draw(SpriteBatch);
-            foreach (Dreadnought var1 in EnemyDreadnought) var1.Draw(SpriteBatch);
-            foreach (Missile var1 in EnemyMissile)
-            {
-                if(var1.Destroy == false) var1.Draw(SpriteBatch);
-            }
+            foreach (Dreadnought var1 in EnemyDreadnought) { var1.Draw(SpriteBatch); var1.DrawCountDown(SpriteBatch); }
+            foreach (Missile var1 in EnemyMissile) var1.Draw(SpriteBatch);
             foreach (Slug var1 in EnemySlug) var1.Draw(SpriteBatch);
             foreach (Cannon var1 in EnemyCannon) if(var1.IsActive) var1.Draw(SpriteBatch);
             cone.Draw(spriteBatch);
