@@ -11,6 +11,23 @@ namespace HollowBack
 {
     class Slug : Enemy
     {
+        private bool isFriendly = false;
+        private bool isDestroy = false;
+
+
+        public bool Friendly
+        {
+            get { return isFriendly; }
+            set { this.isFriendly = value; }
+        }
+
+        public bool Destroy
+        {
+            get { return isDestroy; }
+            set { this.isDestroy = value; }
+        }
+
+
         public Slug(ContentManager pContent, Scene pScene)
             : base(pContent, "Slug", pScene)
         {

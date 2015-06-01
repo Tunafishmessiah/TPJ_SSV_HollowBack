@@ -13,7 +13,6 @@ namespace HollowBack
     class SSV_HollowBack : Sprite
     {
         private Radar radar;
-        public int HB_HP;
         //640x360 ->hb position
 
         public SSV_HollowBack(ContentManager pContent, Scene scene) : base(pContent ,"SSV_HollowBack", scene)

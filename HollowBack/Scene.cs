@@ -25,10 +25,16 @@ namespace HollowBack
         private List<Frigate> enemyFrigate;
         private List<Carrier> enemyCarrier;
         private List<Dreadnought> enemyDreadnought;
+        //Countdown_Cannon
+        SpriteFont Font1;
+        Vector2 FontPos;
+        //
         private List<Missile> enemyMissile;
         private List<Missile> enemyMissileDump;
         private List<Slug> enemySlug;
+        private List<Slug> enemySlugDump;
         private Point targetID;
+        private int HB_hp;
         //private List<PtCannon> enemyCannon;
         private List<HUD_icon> hud;
         private List<Right_HUD> R_hud;
@@ -104,6 +110,18 @@ namespace HollowBack
         {
             get { return enemySlug; }
             private set { enemySlug = value; }
+        }
+
+        public List<Slug> EnemySlugDump
+        {
+            get { return enemySlugDump; }
+            private set { enemySlugDump = value; }
+        }
+
+        public int HB_HP
+        {
+            get { return HB_hp; }
+            private set { HB_hp = value; }
         }
 
         //public List<PtCannon> EnemyCannon
@@ -188,6 +206,9 @@ namespace HollowBack
             this.spriteBatch = pSpriteBatch;
             this.screenSize = screenDimensions;
             this.Content = pContent;
+
+            Font1 = pContent.Load<SpriteFont>("RadioLand");
+            FontPos = new Vector2(0, 0);   
 
             //This variable were made so that we can save some processing time, we can acess it
             //from any variable that's called here, so we don't need to call them in almost every single thing we have on screen
@@ -418,7 +439,10 @@ namespace HollowBack
             EnemyCarrier = new List<Carrier>();
             EnemyDreadnought = new List<Dreadnought>();
             EnemyMissile = new List<Missile>();
+            enemyMissileDump = new List<Missile>();
             EnemySlug = new List<Slug>();
+            enemySlugDump = new List<Slug>();
+            HB_hp = 100;
         }
 
         private void Gameplay_Update(int GameState, GameTime pGameTime, ContentManager Content)
@@ -512,17 +536,28 @@ namespace HollowBack
                     if (Missile.Friendly == false && Missile.IsMoving == false)
                     {
                         Missile.Destroy = true;
-
-                        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-                        EnemyMissile.Remove(Missile);
+                        enemyMissileDump.Add(Missile);
+                        HB_hp -= 1;
+                        Console.WriteLine("HollowBack Health" + HB_hp);
                     }
                 }
+
+                enemyMissile = enemyMissile.Except(enemyMissileDump).ToList();
+
                 foreach (Slug Slug in EnemySlug)
                 {
                     Slug.Update();
+
+                    if (Slug.Friendly == false && Slug.IsMoving == false)
+                    {
+                        Slug.Destroy = true;
+                        enemySlugDump.Add(Slug);
+                        HB_hp -= 5;
+                        Console.WriteLine("HollowBack Health" + HB_hp);
+                    }
                 }
+
+                enemySlug = enemySlug.Except(enemySlugDump).ToList();
 
                 //endWeapons Update
 

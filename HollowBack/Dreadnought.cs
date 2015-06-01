@@ -11,6 +11,8 @@ namespace HollowBack
 {
     class Dreadnought : Enemy
     {
+        
+
         public Dreadnought(ContentManager pContent, Scene scene, int pID)
             : base(pContent, "Dreadnought", scene)
         {
@@ -25,7 +27,8 @@ namespace HollowBack
             this.Scale = new Vector2(0.5f, 0.5f);
 
             this.s_texture = pContent.Load<Texture2D>("DreadnoughtSelected");
-                
+
+ 
         }
 
         public override void Update(GameTime pGameTime)
