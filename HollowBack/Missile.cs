@@ -53,10 +53,10 @@ namespace HollowBack
             base.UpdateMovement(10);
         }
 
-        public void Update(Vector2 pTarget)
+        public Point Update(Vector2 pTarget)
         {
             UpdateMovement(pTarget);
-            base.Update();
+            return base.Update();
         }
 
         public override void TakeDamage(int pDmgType)

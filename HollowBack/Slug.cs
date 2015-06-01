@@ -46,7 +46,7 @@ namespace HollowBack
             this.s_texture = pContent.Load<Texture2D>("SlugSelected");
         }
 
-        public override void Update()
+        public void Update()
         {
             UpdateMovement(10);
             base.Update();

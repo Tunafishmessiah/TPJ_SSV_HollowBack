@@ -22,14 +22,22 @@ namespace HollowBack
         private int GAMESTATE;
         private SpriteBatch spriteBatch;
         private List<Fighter> enemyFighter;
+        private List<Fighter> enemyFighterDump;
         private List<Frigate> enemyFrigate;
+        private List<Frigate> enemyFrigateDump;
         private List<Carrier> enemyCarrier;
+        private List<Carrier> enemyCarrierDump;
         private List<Dreadnought> enemyDreadnought;
+        private List<Dreadnought> enemyDreadnoughtDump;
+        private List<Laser> lasers;
+        private List<Laser> lasersDump;
         private List<Missile> enemyMissile;
         private List<Missile> enemyMissileDump;
         private List<Slug> enemySlug;
         private List<Slug> enemySlugDump;
         private List<Cannon> enemyCannon;
+        private List<Cannon> enemyCannonDump;
+        private List<WeaponPlayer> playerWpn;
         private Point targetID;
         private int HB_hp;
         //private List<PtCannon> enemyCannon;
@@ -73,10 +81,22 @@ namespace HollowBack
             private set { enemyFighter = value; }
         }
 
+        public List<Fighter> EnemyFighterDump
+        {
+            get { return enemyFighterDump; }
+            private set { enemyFighterDump = value; }
+        }
+
         public List<Frigate> EnemyFrigate
         {
             get { return enemyFrigate; }
             private set { enemyFrigate = value; }
+        }
+
+        public List<Frigate> EnemyFrigateDump
+        {
+            get { return enemyFrigateDump; }
+            private set { enemyFrigateDump = value; }
         }
 
         public List<Carrier> EnemyCarrier
@@ -85,10 +105,22 @@ namespace HollowBack
             private set { enemyCarrier = value; }
         }
 
+        public List<Carrier> EnemyCarrierDump
+        {
+            get { return enemyCarrierDump; }
+            private set { enemyCarrierDump = value; }
+        }
+
         public List<Dreadnought> EnemyDreadnought
         {
             get { return enemyDreadnought; }
             private set { enemyDreadnought = value; }
+        }
+
+        public List<Dreadnought> EnemyDreadnoughtDump
+        {
+            get { return enemyDreadnoughtDump; }
+            private set { enemyDreadnoughtDump = value; }
         }
 
 
@@ -102,6 +134,18 @@ namespace HollowBack
         {
             get { return enemyMissileDump; }
             private set { enemyMissileDump = value; }
+        }
+
+        public List<Laser> Lasers
+        {
+            get { return lasers; }
+            private set { lasers = value; }
+        }
+
+        public List<Laser> LaserDump
+        {
+            get { return lasersDump; }
+            private set { lasersDump = value; }
         }
 
         public List<Slug> EnemySlug
@@ -122,17 +166,23 @@ namespace HollowBack
             private set { enemyCannon = value; }
         }
 
+        public List<Cannon> EnemyCannonDump
+        {
+            get { return enemyCannonDump; }
+            private set { enemyCannonDump = value; }
+        }
+
+        public List<WeaponPlayer> PlayerWpn
+        {
+            get { return playerWpn; }
+            private set { playerWpn = value; }
+        }
+
         public int HB_HP
         {
             get { return HB_hp; }
             private set { HB_hp = value; }
         }
-
-        //public List<PtCannon> EnemyCannon
-        //{
-        //    get { return enemyCannon; }
-        //    private set { enemyCannon = value; }
-        //}
 
         public Point TargetID
         {
@@ -304,23 +354,6 @@ namespace HollowBack
             Sprite var = new Sprite(pContent, pAssetName,this);
         }
 
-        public Vector2 GetPositionByID(Point pID)
-        {
-            switch (pID.X)
-            {
-                case 1:
-                    return EnemyFighter[pID.Y].Position;
-                case 2:
-                    return EnemyFrigate[pID.Y].Position;
-                case 3:
-                    return EnemyCarrier[pID.Y].Position;
-                case 4:
-                    return EnemyDreadnought[pID.Y].Position;
-                default:
-                    return new Vector2(640, 360);
-            }
-        }
-
         #region Add Enemy
 
         public void AddFigther(ContentManager pContent, Vector2 pPosition, Vector2 pDestination)
@@ -437,14 +470,27 @@ namespace HollowBack
         private void Gameplay_Load(int GameState, SpriteBatch pSpriteBatch,  ContentManager Content)
         {                    //Loading stuff and starting up some needed variables
             EnemyFighter = new List<Fighter>();
+            EnemyFighterDump = new List<Fighter>();
             EnemyFrigate = new List<Frigate>();
+            EnemyFrigateDump = new List<Frigate>();
             EnemyCarrier = new List<Carrier>();
+            EnemyCarrierDump = new List<Carrier>();
             EnemyDreadnought = new List<Dreadnought>();
+            EnemyDreadnoughtDump = new List<Dreadnought>();
             EnemyMissile = new List<Missile>();
             enemyMissileDump = new List<Missile>();
+            Lasers = new List<Laser>();
+            LaserDump = new List<Laser>();
             EnemySlug = new List<Slug>();
             enemySlugDump = new List<Slug>();
             EnemyCannon = new List<Cannon>();
+            EnemyCannonDump = new List<Cannon>();
+            PlayerWpn = new List<WeaponPlayer>();
+            PlayerWpn.Add(new WeaponPlayer(10, 10, 300)); // Missile
+            PlayerWpn.Add(new WeaponPlayer(10, 10, 200)); // Laser
+            PlayerWpn.Add(new WeaponPlayer(10, 10, 400)); // Railgun
+            PlayerWpn.Add(new WeaponPlayer(10, 10, 500)); // Particle Cannon
+            PlayerWpn.Add(new WeaponPlayer(10, 10, 800)); // EMP
             HB_hp = 100;
         }
 
@@ -478,7 +524,8 @@ namespace HollowBack
                 //Enemies Update
                 foreach (Fighter Enemies in EnemyFighter)
                 {
-                    Enemies.Update(pGameTime);
+                    Point ID = Enemies.Update(pGameTime);
+                    if (ID != Point.Zero) TargetID = ID;
                     Enemies.UpdatePositionAngle(cone);
                     if (Enemies.FireWeapon)
                     {
@@ -490,10 +537,14 @@ namespace HollowBack
                         EnemyMissile[i].SetDestination(new Vector2(640, 360));
                         Enemies.FireWeapon = false;
                     }
+                    if (!Enemies.IsActive) EnemyFighterDump.Add(Enemies);
                 }
+                EnemyFighter = EnemyFighter.Except(EnemyFighterDump).ToList();
+
                 foreach (Frigate Enemies in EnemyFrigate)
                 {
-                    Enemies.Update(pGameTime);
+                    Point ID = Enemies.Update(pGameTime);
+                    if (ID != Point.Zero) TargetID = ID;
                     Enemies.UpdatePositionAngle(cone);
                     if (Enemies.FireWeapon)
                     {
@@ -505,20 +556,30 @@ namespace HollowBack
                         EnemySlug[i].SetDestination(new Vector2(640, 360));
                         Enemies.FireWeapon = false;
                     }
+                    if (!Enemies.IsActive) EnemyFrigateDump.Add(Enemies);
                 }
+                EnemyFrigate = EnemyFrigate.Except(EnemyFrigateDump).ToList();
+
                 foreach (Carrier Enemies in EnemyCarrier)
                 {
-                    Enemies.Update(pGameTime);
+                    Point ID = Enemies.Update(pGameTime);
+                    if (ID != Point.Zero) 
+                        TargetID = ID;
                     Enemies.UpdatePositionAngle(cone);
                     if (Enemies.FireWeapon)
                     {
                         AddFigther(content, Enemies.Position, new Vector2(640, 360));
                         Enemies.FireWeapon = false;
                     }
+                    if (!Enemies.IsActive) EnemyCarrierDump.Add(Enemies);
                 }
+                EnemyCarrier = EnemyCarrier.Except(EnemyCarrierDump).ToList();
+
                 foreach (Dreadnought Enemies in EnemyDreadnought)
                 {
-                    Enemies.Update(pGameTime);
+                    Point ID = Enemies.Update(pGameTime);
+                    if (ID != Point.Zero) 
+                        TargetID = ID;
                     Enemies.UpdatePositionAngle(cone);
                     if (Enemies.FireWeapon)
                     {
@@ -529,25 +590,37 @@ namespace HollowBack
                         EnemyCannon[i].SpawnAt(Enemies.Position);
                         Enemies.FireWeapon = false;
                     }
+                    if (!Enemies.IsActive) EnemyDreadnoughtDump.Add(Enemies);
                 }
+                EnemyDreadnought = EnemyDreadnought.Except(EnemyDreadnoughtDump).ToList();
+
                 //endEnemies Update
 
                 //Weapons Update
 
                 foreach (Missile Missile in EnemyMissile)
                 {
-                    Missile.Update(GetPositionByID(Missile.TargetID));
+                    Point ID = Missile.Update(GetPositionByID(Missile.TargetID));
+                    if (ID != Point.Zero) TargetID = ID;
 
                     if (Missile.Friendly == false && Missile.IsMoving == false)
                     {
                         Missile.Destroy = true;
                         enemyMissileDump.Add(Missile);
                         HB_hp -= 1;
-                        //Console.WriteLine("HollowBack Health" + HB_hp);
+                    }
+                    else if (Missile.Friendly && !Missile.IsMoving)
+                    {
+                        DamageTarget(Missile.TargetID, 1);
                     }
                 }
 
                 enemyMissile = enemyMissile.Except(enemyMissileDump).ToList();
+
+                foreach (Laser Lsr in Lasers)
+                {
+                    Lsr.Update();
+                }
 
                 foreach (Slug Slug in EnemySlug)
                 {
@@ -558,7 +631,10 @@ namespace HollowBack
                         Slug.Destroy = true;
                         enemySlugDump.Add(Slug);
                         HB_hp -= 5;
-                       // Console.WriteLine("HollowBack Health" + HB_hp);
+                    }
+                    else if (Slug.Friendly && !Slug.IsMoving)
+                    {
+                        DamageTarget(Slug.TargetID, 2);
                     }
                 }
 
@@ -583,6 +659,79 @@ namespace HollowBack
                     SpawnBlock = 0;
                 }
                 else SpawnBlock += 1;
+
+                //PlayerWeapons
+
+                PlayerWpn[0].Update();
+                PlayerWpn[1].Update();
+                PlayerWpn[2].Update();
+                PlayerWpn[3].Update();
+                PlayerWpn[4].Update();
+
+                if (keyboard.IsKeyDown(Keys.D1))
+                {
+                    if (PlayerWpn[0].CanFire)
+                    {
+                        int i = 0;
+                        if (EnemyMissile.Count != 0) while (i < EnemyMissile.Count && EnemyMissile[i] != null) i++;
+                        Missile var = new Missile(content, this, i, TargetID);
+                        EnemyMissile.Insert(i, var);
+                        EnemyMissile[i].SpawnAt(new Vector2(640, 360));
+                        EnemyMissile[i].SetDestination(GetPositionByID(TargetID));
+                        EnemyMissile[i].Friendly = true;
+                        PlayerWpn[0].FireWeapon();
+                    }
+                }
+                else if (keyboard.IsKeyDown(Keys.D2))
+                {
+                    if (PlayerWpn[1].CanFire)
+                    {
+                        int i = 0;
+                        if (Lasers.Count != 0) while (i < Lasers.Count && Lasers[i] != null) i++;
+                        Laser var = new Laser(content, this, TargetID, 10);
+                        Lasers.Insert(i, var);
+                        Lasers[i].SpawnAt(new Vector2(640, 360));
+                        PlayerWpn[1].FireWeapon();
+                    }
+                }
+                else if (keyboard.IsKeyDown(Keys.D3))
+                {
+                    if (PlayerWpn[2].CanFire)
+                    {
+                        int i = 0;
+                        if (EnemySlug.Count != 0) while (i < EnemySlug.Count && EnemySlug[i] != null) i++;
+                        Slug var = new Slug(content, this);
+                        EnemySlug.Insert(i, var);
+                        EnemySlug[i].SpawnAt(new Vector2(640, 360));
+                        EnemySlug[i].SetDestination(GetPositionByID(TargetID));
+                        PlayerWpn[2].FireWeapon();
+                    }
+                }
+                else if (keyboard.IsKeyDown(Keys.D4))
+                {
+                    if (PlayerWpn[3].CanFire)
+                    {
+                        int i = 0;
+                        if (EnemyCannon.Count != 0) while (i < EnemyCannon.Count && EnemyCannon[i] != null) i++;
+                        Cannon var = new Cannon(content, this, TargetID, 10);
+                        EnemyCannon.Insert(i, var);
+                        EnemyCannon[i].SpawnAt(new Vector2(640, 360));
+                        PlayerWpn[3].FireWeapon();
+                        DamageTarget(TargetID, 3);
+                    }
+                }
+                else if (keyboard.IsKeyDown(Keys.D5))
+                {
+                    if (PlayerWpn[4].CanFire)
+                    {
+                        foreach (Fighter var1 in EnemyFighter) DamageTarget(var1.ID, 4);
+                        foreach (Frigate var1 in EnemyFrigate) DamageTarget(var1.ID, 4);
+                        foreach (Carrier var1 in EnemyCarrier) DamageTarget(var1.ID, 4);
+                        foreach (Dreadnought var1 in EnemyDreadnought) DamageTarget(var1.ID, 4);
+                    }
+                }
+
+                //End Player Weapons
 
                 //Dreadnought Countdown
                 foreach (Dreadnought Dreadnought in EnemyDreadnought)
@@ -723,6 +872,56 @@ namespace HollowBack
         //    }
         //private List<Missile> enemyMissile;
         //private List<Slug> enemySlug;
+        }
+
+        public Vector2 GetPositionByID(Point pID)
+        {
+            switch (pID.X)
+            {
+                case 0:
+                    return new Vector2(640, 360);
+                case 1:
+                    return EnemyFighter[pID.Y].Position;
+                case 2:
+                    return EnemyFrigate[pID.Y].Position;
+                case 3:
+                    return EnemyCarrier[pID.Y].Position;
+                case 4:
+                    return EnemyDreadnought[pID.Y].Position;
+                case 5:
+                    return EnemyMissile[pID.Y].Position;
+                default:
+                    return Vector2.Zero;
+            }
+        }
+
+        public void DamageTarget(Point pID, int pDmgType)
+        {
+            switch (pID.X)
+            {
+                case 1:
+                    if (EnemyFighter.Count != 0) 
+                        EnemyFighter[pID.Y].TakeDamage(pDmgType);
+                    break;
+                case 2:
+                    if (EnemyFrigate.Count != 0) 
+                        EnemyFrigate[pID.Y].TakeDamage(pDmgType);
+                    break;
+                case 3:
+                    if (EnemyCarrier.Count != 0) 
+                        EnemyCarrier[pID.Y].TakeDamage(pDmgType);
+                    break;
+                case 4:
+                    if (EnemyDreadnought.Count != 0) 
+                        EnemyDreadnought[pID.Y].TakeDamage(pDmgType);
+                    break;
+                case 5:
+                    if (EnemyMissile.Count != 0) 
+                        EnemyMissile[pID.Y].TakeDamage(pDmgType);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

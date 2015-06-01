@@ -46,11 +46,11 @@ namespace HollowBack
  
         }
 
-        public override void Update(GameTime pGameTime)
+        public Point Update(GameTime pGameTime)
         {
             UpdateMovement(400);
             UpdateWeapons();
-            base.Update();
+            return base.Update();
         }
 
         public void DrawCountDown (SpriteBatch pSpriteBatch)

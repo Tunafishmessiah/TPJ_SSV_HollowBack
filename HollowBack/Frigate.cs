@@ -27,11 +27,11 @@ namespace HollowBack
             this.s_texture = pContent.Load<Texture2D>("FrigateSelected");
         }
 
-        public override void Update(GameTime pGameTime)
+        public Point Update(GameTime pGameTime)
         {
             UpdateMovement(250);
             UpdateWeapons();
-            base.Update();
+            return base.Update();
         }
 
         public override void TakeDamage(int pDmgType)

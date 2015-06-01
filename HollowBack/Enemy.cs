@@ -139,11 +139,11 @@ namespace HollowBack
             selected = false;
         }
 
-        public virtual void Update()
+        public virtual Point Update()
         {
-            Update_Selection();
-
+            if (Health <= 0) IsActive = false;
             Update_Texture();
+            return Update_Selection();
         }
         public void SpawnAt(Vector2 pPosition)
         {
@@ -217,7 +217,7 @@ namespace HollowBack
             }
         }
 
-        public void Update_Selection()
+        public Point Update_Selection()
         {
             Point mPosition = this.scene.Mstate.Position;
             //Avaluating if the mouse is on top of this icon
@@ -235,8 +235,11 @@ namespace HollowBack
                         hud.add_selected(this);
                     }
                     isSelected = true;
+                    return this.ID;
                 }
+                return Point.Zero;
             }
+            return Point.Zero;
         }
 
         public void SetDestination(Vector2 pDestination)

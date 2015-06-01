@@ -58,6 +58,7 @@
     <Compile Include="SSV_HollowBack.cs" />
     <Compile Include="Targeting.cs" />
     <Compile Include="Weapon.cs" />
+    <Compile Include="WeaponPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
