@@ -12,6 +12,23 @@ namespace HollowBack
 {
     class Missile : Enemy
     {
+        private bool isFriendly = false;
+        private bool isDestroy = false;
+
+
+        public bool Friendly
+        {
+            get { return isFriendly; }
+            set { this.isFriendly = value; }
+        }
+
+        public bool Destroy
+        {
+            get { return isDestroy; }
+            set { this.isDestroy = value; }
+        }
+
+
         public Missile(ContentManager pContent, Scene pScene, int pID, Point pTargetID)
             : base(pContent, "Missile", pScene)
         {
@@ -33,7 +50,7 @@ namespace HollowBack
         public void UpdateMovement(Vector2 pTarget)
         {
             SetDestination(pTarget);
-            base.UpdateMovement(0);
+            base.UpdateMovement(10);
         }
 
         public void Update(Vector2 pTarget)

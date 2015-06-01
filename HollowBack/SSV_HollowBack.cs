@@ -13,6 +13,8 @@ namespace HollowBack
     class SSV_HollowBack : Sprite
     {
         private Radar radar;
+        public int HB_HP;
+        //640x360 ->hb position
 
         public SSV_HollowBack(ContentManager pContent, Scene scene) : base(pContent ,"SSV_HollowBack", scene)
         {
@@ -20,6 +22,7 @@ namespace HollowBack
             this.Position = new Vector2(this.scene.ScreenSize.X/2 , this.scene.ScreenSize.Y/2);
             radar = new Radar(pContent, scene);         
             radar.Position = new Vector2(this.scene.ScreenSize.X / 2 - radar.Texture.Width / 2, this.scene.ScreenSize.Y / 2 - radar.Texture.Height / 2);
+
         }
 
         public override void Update(GameTime pGameTime)

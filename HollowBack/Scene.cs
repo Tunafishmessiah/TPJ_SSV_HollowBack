@@ -26,6 +26,7 @@ namespace HollowBack
         private List<Carrier> enemyCarrier;
         private List<Dreadnought> enemyDreadnought;
         private List<Missile> enemyMissile;
+        private List<Missile> enemyMissileDump;
         private List<Slug> enemySlug;
         private Point targetID;
         //private List<PtCannon> enemyCannon;
@@ -91,6 +92,12 @@ namespace HollowBack
         {
             get { return enemyMissile; }
             private set { enemyMissile = value; }
+        }
+
+        public List<Missile> EnemyMissileDump
+        {
+            get { return enemyMissileDump; }
+            private set { enemyMissileDump = value; }
         }
 
         public List<Slug> EnemySlug
@@ -501,6 +508,16 @@ namespace HollowBack
                 foreach (Missile Missile in EnemyMissile)
                 {
                     Missile.Update(GetPositionByID(Missile.TargetID));
+
+                    if (Missile.Friendly == false && Missile.IsMoving == false)
+                    {
+                        Missile.Destroy = true;
+
+                        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+                        EnemyMissile.Remove(Missile);
+                    }
                 }
                 foreach (Slug Slug in EnemySlug)
                 {
@@ -511,7 +528,7 @@ namespace HollowBack
 
                 ladar.Update(pGameTime, cone.Lockin, cone.stopAngle_M);
 
-                if (SpawnBlock == 50)
+                if (SpawnBlock == 200)
                 {
                     SpawnEnemy(Content);
                     SpawnBlock = 0;
@@ -526,7 +543,10 @@ namespace HollowBack
             foreach (Frigate var1 in EnemyFrigate) var1.Draw(SpriteBatch);
             foreach (Carrier var1 in EnemyCarrier) var1.Draw(SpriteBatch);
             foreach (Dreadnought var1 in EnemyDreadnought) var1.Draw(SpriteBatch);
-            foreach (Missile var1 in EnemyMissile) var1.Draw(SpriteBatch);
+            foreach (Missile var1 in EnemyMissile)
+            {
+                if(var1.Destroy == false) var1.Draw(SpriteBatch);
+            }
             foreach (Slug var1 in EnemySlug) var1.Draw(SpriteBatch);
             cone.Draw(spriteBatch);
             SSV.Draw(SpriteBatch);

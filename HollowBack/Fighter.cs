@@ -18,8 +18,8 @@ namespace HollowBack
             WeaponSys = new Weapon(10, 10, 200); // Set the weapon systems
             Health = 10;
 
-            MaxSpeed = .7f;
-            Accelaration = 0.3f;
+            MaxSpeed = .5f;
+            Accelaration = 0.2f;
 
             this.Scale = new Vector2(0.5f, 0.5f);
 

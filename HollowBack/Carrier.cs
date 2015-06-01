@@ -16,7 +16,7 @@ namespace HollowBack
         {
 
             ID = new Point(3, pID);
-            WeaponSys = new Weapon(10, 10, 405); // Set the weapon systems
+            WeaponSys = new Weapon(25, 10, 405); // Set the weapon systems
             Health = 10;
 
             MaxSpeed = 0.3f;
