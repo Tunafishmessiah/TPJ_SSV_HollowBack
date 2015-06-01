@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace HollowBack
 {
-    class Laser : Sprite
+    class Cannon : Sprite
     {
-        #region Fields
+                #region Fields
 
         private Point targetID; // The target's ID
         private float duration; // For how long does the effet stay visible;
@@ -39,7 +39,7 @@ namespace HollowBack
 
         #endregion
 
-        public Laser(ContentManager pContent, Scene pScene, Point pTarget, float pDuration)
+        public Cannon(ContentManager pContent, Scene pScene, Point pTarget, float pDuration)
             : base(pContent, "Hunter", pScene)
         {
             IsActive = true;

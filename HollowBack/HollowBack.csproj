@@ -36,6 +36,7 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Cannon.cs" />
     <Compile Include="Carrier.cs" />
     <Compile Include="Dreadnought.cs" />
     <Compile Include="Enemy.cs" />
